@@ -1,26 +1,12 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
     createDrawerNavigator, DrawerContentScrollView,
     DrawerItem,
 } from '@react-navigation/drawer';
-import { DrawerStackParamList, RootStackParamList, TabStackParamList } from './typeCheckNavigator';
-import Icon from 'react-native-vector-icons/FontAwesome';;
-import HomePage from '../screens/HomePage';
-import ShoeFavourite from '../screens/ShoeFavourite';
-import Cart from '../screens/Cart';
-import Profile from '../screens/Profile';
+import { DrawerStackParamList, RootStackParamList } from './typeCheckNavigator';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { BottomTabNavigator } from './BottomTab/BottomTabNavigator';
 
-
-const BottomTabStack = createBottomTabNavigator<TabStackParamList>();
-export const BottomTabNavigator = () => {
-    return <BottomTabStack.Navigator screenOptions={{ headerShown: false }}>
-        <BottomTabStack.Screen name="TabHome" component={HomePage} />
-        <BottomTabStack.Screen name="TabFavourite" component={ShoeFavourite} />
-        <BottomTabStack.Screen name='TabCart' component={Cart} />
-        <BottomTabStack.Screen name='TabProfile' component={Profile} />
-    </BottomTabStack.Navigator>
-}
 
 const DrawerStack = createDrawerNavigator<DrawerStackParamList>();
 function CustomDrawerContent(props: any) {

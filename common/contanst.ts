@@ -1,1 +1,3 @@
-export const CONSTANST = {};
+export const CONSTANST = {
+    iconSize:24,
+};

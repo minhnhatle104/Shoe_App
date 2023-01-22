@@ -1,7 +1,7 @@
 import { Button, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../navigator/typeCheckNavigator';
+import { RootStackParamList } from '../../navigator/typeCheckNavigator';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type Props = {}
