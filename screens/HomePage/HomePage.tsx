@@ -15,7 +15,7 @@ const HomePage = (props: Props) => {
             <Button
                 title="Cart"
                 onPress={() => {
-                    navigation.navigate("TabCart");
+                    navigation.navigate("Cart");
                 }}
             />
         </View>

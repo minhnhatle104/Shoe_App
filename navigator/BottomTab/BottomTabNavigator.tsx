@@ -8,28 +8,28 @@ import HomePage from '../../screens/HomePage/HomePage';
 import ShoeFavourite from '../../screens/ShoeFavourite/ShoeFavourite';
 import Cart from '../../screens/Cart/Cart';
 import Profile from '../../screens/Profile/Profile';
-import { TabStackParamList } from '../typeCheckNavigator';
+import { RootStackParamList } from '../typeCheckNavigator';
 import { StyleSheet } from "react-native";
 import Colors from "../../common/Colors";
 import { CONSTANST } from "../../common/contanst";
 
 
 type TabScreen = {
-    route: keyof TabStackParamList;
+    route: keyof RootStackParamList;
     label:string;
     activeIcon: string;
     component:React.FC;
 }
 
 const TabArr:TabScreen[] = [
-    { route: "TabHome", label: 'Home',  activeIcon: 'home', component: HomePage },
-    { route: "TabFavourite", label: 'Like',activeIcon: 'heart', component: ShoeFavourite },
-    { route: 'TabCart', label: 'Cart', activeIcon: 'cart', component: Cart },
-    { route: 'TabProfile', label: 'Account', activeIcon: 'account', component: Profile },
+    { route: "Home", label: 'Home',  activeIcon: 'home', component: HomePage },
+    { route: "Favourite", label: 'Like',activeIcon: 'heart', component: ShoeFavourite },
+    { route: 'Cart', label: 'Cart', activeIcon: 'cart', component: Cart },
+    { route: 'Profile', label: 'Account', activeIcon: 'account', component: Profile },
 ];
 
 
-const BottomTabStack = createBottomTabNavigator<TabStackParamList>();
+const BottomTabStack = createBottomTabNavigator<RootStackParamList>();
 
 const animate1 = { 0: { scale: .5, translateY: 7 }, .92: { translateY: -34 }, 1: { scale: 1.2, translateY: -24 } }
 const animate2 = { 0: { scale: 1.2, translateY: -24 }, 1: { scale: 1, translateY: 7 } }
