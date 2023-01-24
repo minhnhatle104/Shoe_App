@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     View,
     Text,
@@ -10,7 +10,6 @@ import {
     createDrawerNavigator,
     DrawerContentScrollView,
     DrawerItem,
-    DrawerItemList,
 } from '@react-navigation/drawer';
 
 import { RootStackParamList } from "../typeCheckNavigator";
@@ -20,14 +19,18 @@ import Colors from '../../common/Colors';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 
 const DrawerStack = createDrawerNavigator<RootStackParamList>();
+
 function CustomDrawerContent(props: any) {
+    const [labelFocused, setLabelFocused] = useState("Home")
+
     return (
         <View style={{ flex: 1 }}>
             <DrawerContentScrollView
                 {...props}
-                contentContainerStyle={{ backgroundColor: '#8200d6' }}>
+                contentContainerStyle={{ backgroundColor: 'red' }}>
                 <ImageBackground
                     source={require('../../assets/images/background_ars.jpg')}
                     style={{ padding: 20 }}>
@@ -56,30 +59,117 @@ function CustomDrawerContent(props: any) {
                         <FontAwesome5 name="coins" size={14} color="#fff" />
                     </View>
                 </ImageBackground>
-                <View style={{ flex: 1, backgroundColor: '#fff', paddingTop: 10 }}>
-                    <DrawerItem
-                        label="Home"
-                        icon={({ focused, color, size }) => <FontAwesome5 name="home" size={CONSTANST.iconSize} />}
-                        onPress={() => props.navigation.navigate('Home')}
-                    />
-                    <DrawerItem
-                        label="Favourite"
-                        onPress={() => props.navigation.navigate('Favourite')}
-                    />
-                    <DrawerItem
-                        label="Cart"
-                        onPress={() => props.navigation.navigate('Cart')}
-                    />
-                    <DrawerItem
-                        label="Profile"
-                        onPress={() => props.navigation.navigate('Profile')}
-                    />
+
+                {/* NAVIGATION BODY */}
+                <View style={{ flex: 1, backgroundColor: '#fff', padding: 20 }}>
+                    <TouchableOpacity onPress={() => {
+                        setLabelFocused("Home")
+                        props.navigation.navigate('Home')
+                    }} style={{marginBottom:10}}>
+                        <View style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            backgroundColor: labelFocused === "Home" ? Colors.red : Colors.white,
+                            padding: 10,
+                            borderRadius: 20,
+                        }}>
+                            <FontAwesome5 color={labelFocused === "Home" ? Colors.white : Colors.red}
+                                name="home" size={CONSTANST.iconSize} />
+                            <Text
+                                style={{
+                                    color: labelFocused === "Home" ? Colors.white : Colors.red,
+                                    fontSize: 15,
+                                    fontFamily: 'Roboto-Medium',
+                                    marginLeft: 5,
+                                }}>
+                                Home
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => {
+                        setLabelFocused("Favourite")
+                        props.navigation.navigate('Favourite')
+                    }}  style={{marginBottom:10}}>
+                        <View style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            backgroundColor: labelFocused === "Favourite" ? Colors.red : Colors.white,
+                            padding: 10,
+                            borderRadius: 20,
+                        }}>
+                            <FontAwesome5 color={labelFocused === "Favourite" ? Colors.white : Colors.red}
+                                name="heart" size={CONSTANST.iconSize} />
+                            <Text
+                                style={{
+                                    color: labelFocused === "Favourite" ? Colors.white : Colors.red,
+                                    fontSize: 15,
+                                    fontFamily: 'Roboto-Medium',
+                                    marginLeft: 5,
+                                }}>
+                                Favourite
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => {
+                        setLabelFocused("Cart")
+                        props.navigation.navigate('Cart')
+                    }}  style={{marginBottom:10}}>
+                        <View style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            backgroundColor: labelFocused === "Cart" ? Colors.red : Colors.white,
+                            padding: 10,
+                            borderRadius: 20,
+                        }}>
+                            <FontAwesome5 color={labelFocused === "Cart" ? Colors.white : Colors.red}
+                                name="shopping-cart" size={CONSTANST.iconSize} />
+                            <Text
+                                style={{
+                                    color: labelFocused === "Cart" ? Colors.white : Colors.red,
+                                    fontSize: 15,
+                                    fontFamily: 'Roboto-Medium',
+                                    marginLeft: 5,
+                                }}>
+                                Cart
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => {
+                        setLabelFocused("Profile")
+                        props.navigation.navigate('Profile')
+                    }}  style={{marginBottom:10}}>
+                        <View style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            backgroundColor: labelFocused === "Profile" ? Colors.red : Colors.white,
+                            padding: 10,
+                            borderRadius: 20,
+                        }}>
+                            <MaterialCommunityIcons color={labelFocused === "Profile" ? Colors.white : Colors.red}
+                                name="account" size={CONSTANST.iconSize} />
+                            <Text
+                                style={{
+                                    color: labelFocused === "Profile" ? Colors.white : Colors.red,
+                                    fontSize: 15,
+                                    fontFamily: 'Roboto-Medium',
+                                    marginLeft: 5,
+                                }}>
+                                Account
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
             </DrawerContentScrollView>
-            <View style={{ padding: 20, borderTopWidth: 1, borderTopColor: '#ccc' }}>
-                <TouchableOpacity onPress={() => { }} style={{ paddingVertical: 15 }}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Ionicons name="share-social-outline" size={22} />
+
+            {/* FOOTER of DRAWER */}
+            <View style={{ padding: 20, borderTopWidth: 1, borderTopColor: '#ccc'}}>
+                <TouchableOpacity onPress={() => { }}  style={{marginBottom:10}}>
+                    <View style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        padding: 10,
+                    }}>
+                        <Ionicons name="share-social-outline" size={CONSTANST.iconSize} />
                         <Text
                             style={{
                                 fontSize: 15,
@@ -90,9 +180,13 @@ function CustomDrawerContent(props: any) {
                         </Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => { }} style={{ paddingVertical: 15 }}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Ionicons name="exit-outline" size={22} />
+                <TouchableOpacity onPress={() => { }}  style={{marginBottom:10}}>
+                    <View style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        padding: 10,
+                    }}>
+                        <Ionicons name="exit-outline" size={CONSTANST.iconSize} />
                         <Text
                             style={{
                                 fontSize: 15,
@@ -110,10 +204,8 @@ function CustomDrawerContent(props: any) {
 export const DrawerNavigator = () => {
     return (
         <DrawerStack.Navigator
-            drawerContent={(props) => <CustomDrawerContent {...props} />}
-            screenOptions={{
-                headerShown: false,
-            }}>
+            initialRouteName='Home'
+            drawerContent={(props) => <CustomDrawerContent {...props} />}>
             <DrawerStack.Screen name="Overview" component={BottomTabNavigator} />
         </DrawerStack.Navigator>
     )
