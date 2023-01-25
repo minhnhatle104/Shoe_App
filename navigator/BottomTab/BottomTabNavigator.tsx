@@ -25,7 +25,7 @@ const TabArr:TabScreen[] = [
     { route: "Home", label: 'Home',  activeIcon: 'home', component: HomePage },
     { route: "Favourite", label: 'Like',activeIcon: 'heart', component: ShoeFavourite },
     { route: 'Cart', label: 'Cart', activeIcon: 'cart', component: Cart },
-    { route: 'Profile', label: 'Account', activeIcon: 'account', component: Profile },
+    { route: 'Account', label: 'Account', activeIcon: 'account', component: Profile },
 ];
 
 
