@@ -1,4 +1,5 @@
 export default {
+    main:"#F2F2F2",
     primary: '#637aff',
     primaryDark: '#2759ff',
     primaryLite: '#637aff99',
@@ -10,7 +11,7 @@ export default {
     light: '#EEEEEE',
     dark: '#333',
     gray: '#CCCCCC',
-    red: '#ff2f68',
+    red: '#F00000',
     lightRed: '#ff4f7e',
     darkRed: '#d9365e',
     purple: '#8f06e4',

@@ -168,12 +168,9 @@ export const DrawerNavigator = () => {
                 headerRight: () => {
                     return (
                         <View style={{ flexDirection: 'row' }}>
-                            <TouchableOpacity onPress={() => navigation.navigate(SCREENS.CART)}>
+                            <TouchableOpacity style={{marginRight:10}} onPress={() => navigation.navigate(SCREENS.CART)}>
                                 <FontAwesome5 color={Colors.white} name={ICONS.CART} size={CONSTANST.iconSize} />
                                 <Text style={{ position: "absolute", left: 12 }}>0</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={{ marginLeft: 20, marginRight: 20 }} onPress={() => navigation.navigate(SCREENS.ACCOUNT)}>
-                                <MaterialCommunityIcons color={Colors.white} name={ICONS.ACCOUNT} size={CONSTANST.iconSize} />
                             </TouchableOpacity>
                         </View>
 

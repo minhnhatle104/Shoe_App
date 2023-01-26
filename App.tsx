@@ -1,22 +1,25 @@
 import 'react-native-gesture-handler';
 import React, { useEffect } from 'react'
-import { NavigationContainer } from '@react-navigation/native';
-import { StackNavigator } from './navigator/Stack/Navigator';
 import SplashScreen from 'react-native-splash-screen'
-import {View} from "react-native";
+import { View } from "react-native";
+import { Provider } from 'react-redux'
 import Routes from './navigator/Routes';
+import { store } from './redux/configStore';
 
 
 type Props = {}
 
 const App = (props: Props) => {
-  useEffect(()=>{
+  useEffect(() => {
     SplashScreen.hide();
-  },[])
+  }, [])
+  
   return (
-    <View style={{flex:1}}>
-      <Routes/>
-    </View>
+    <Provider store={store}>
+      <View style={{ flex: 1 }}>
+        <Routes />
+      </View>
+    </Provider>
   )
 }
 
