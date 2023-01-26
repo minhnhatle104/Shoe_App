@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getAllProductApi, getProductByCategoryIdApi } from '../thunk/productThunk';
+import { getAllProductApi, getProductByCategoryIdApi, getProductByIdApi } from '../thunk/productThunk';
 
 export interface Product {
     id: number;
@@ -18,11 +18,47 @@ export interface Product {
 }
 
 export type ProductState = {
-    shoeList: Product[] | null
+    shoeList: Product[] | undefined| null
+}
+
+export interface ShoeDetail {
+    id:               number;
+    name:             string;
+    alias:            string;
+    price:            number;
+    feature:          boolean;
+    description:      string;
+    size:             string[];
+    shortDescription: string;
+    quantity:         number;
+    image:            string;
+    categories:       Category[];
+    relatedProducts:  RelatedProduct[];
+}
+
+interface Category {
+    id:       string;
+    category: string;
+}
+
+interface RelatedProduct {
+    id:               number;
+    name:             string;
+    alias:            string;
+    feature:          boolean;
+    price:            number;
+    description:      string;
+    shortDescription: string;
+    image:            string;
+}
+
+export type ProductDetail = {
+    productDetail: ShoeDetail | undefined | null
 }
 
 const initialState = {
     shoeList: null,
+    productDetail: null
 }
 
 const productSlice = createSlice({
@@ -38,6 +74,10 @@ const productSlice = createSlice({
 
         }).addCase(getProductByCategoryIdApi.fulfilled,(state,action)=>{
             state.shoeList = action.payload
+        }).addCase(getProductByIdApi.pending,(state,action)=>{
+
+        }).addCase(getProductByIdApi.fulfilled,(state,action)=>{
+            state.productDetail = action.payload
         })
     },
 });

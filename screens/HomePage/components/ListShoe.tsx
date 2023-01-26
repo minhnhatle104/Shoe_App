@@ -13,7 +13,7 @@ import { RootStackParamList } from '../../../navigator/typeCheckNavigator'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
 type Props = {
-    shoeList: Product[] | null
+    shoeList: Product[] | undefined | null
 }
 
 const ListShoe = (props: Props) => {

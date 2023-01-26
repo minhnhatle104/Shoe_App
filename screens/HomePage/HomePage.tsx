@@ -11,6 +11,7 @@ import { getAllCategoryApi } from '../../redux/thunk/categoryThunk';
 import SearchBar from './components/SearchBar';
 import ListShoe from './components/ListShoe';
 import { getAllProductApi } from '../../redux/thunk/productThunk';
+import AppLoader from '../../common/components/AppLoader';
 
 type Props = {}
 
@@ -18,7 +19,8 @@ const HomePage = (props: Props) => {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
     const categoryList = useSelector((state: RootState) => state.categorySlice.categoryList);
-    const shoeList = useSelector((state:RootState)=>state.productSlice.shoeList);
+    const shoeList = useSelector((state: RootState) => state.productSlice.shoeList);
+    const isLoading = useSelector((state:RootState)=>state.loadingSlice.isLoading);
     const dispatch = useDispatch<AppDispatch>()
 
     useEffect(() => {
@@ -27,11 +29,14 @@ const HomePage = (props: Props) => {
     }, [])
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
-            <SearchBar />
-            <ListCategory categoryList={categoryList} />
-            <ListShoe shoeList={shoeList}/>
-        </SafeAreaView>
+        <>
+            <SafeAreaView style={{ flex: 1 }}>
+                <SearchBar />
+                <ListCategory categoryList={categoryList} />
+                <ListShoe shoeList={shoeList} />
+            </SafeAreaView>
+            {isLoading ? <AppLoader /> : null}
+        </>
     )
 }
 

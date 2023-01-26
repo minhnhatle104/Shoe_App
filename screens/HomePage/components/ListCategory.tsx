@@ -9,7 +9,7 @@ import { AppDispatch } from '../../../redux/configStore'
 import { getAllProductApi, getProductByCategoryIdApi } from '../../../redux/thunk/productThunk'
 
 type Props = {
-    categoryList: Category[] | null
+    categoryList: Category[] | undefined | null
 }
 
 const ListCategory = (props: Props) => {

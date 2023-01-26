@@ -12,7 +12,7 @@ export interface Category {
 }
 
 export type CategoryState = {
-  categoryList: Category[] | null
+  categoryList: Category[] | undefined | null
 }
 
 
