@@ -24,7 +24,11 @@ const ListCategory = (props: Props) => {
             onPress={() => {
                 setIdActive(item.id)
             }}>
-            <Text style={[styles.container_text, { color: idActive === item.id ? Colors.red : Colors.black }]}>
+            <Text style={[styles.container_text, 
+                { 
+                    color: idActive === item.id ? Colors.red : Colors.black ,
+                    fontWeight:idActive === item.id ? "bold" : "400",
+                }]}>
                 {item.category}
             </Text>
         </TouchableOpacity >
@@ -51,7 +55,6 @@ const styles = StyleSheet.create({
         margin: 20,
     },
     container_text: {
-        fontFamily: "sans-serif",
         fontSize: 16,
         fontWeight:"300"
     }
