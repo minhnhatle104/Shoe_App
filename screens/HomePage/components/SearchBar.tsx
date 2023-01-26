@@ -21,7 +21,7 @@ const SearchBar = (props: Props) => {
                     value={number}
                     placeholder="Enter product"
                 />
-                <TouchableOpacity style={styles.container_button}>
+                <TouchableOpacity>
                     <FontAwesome5 name='search' size={CONSTANST.iconSize} />
                 </TouchableOpacity>
             </View>
