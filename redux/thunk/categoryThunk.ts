@@ -4,12 +4,12 @@ import STATUS_CODE from "../../common/StatusCode";
 
 export const getAllCategoryApi = createAsyncThunk(
     "shoe/categoryApi",
-   async () => {
-        try{
+    async () => {
+        try {
             const result = await axiosInstance.get("Product/getAllCategory")
             return result.data.content
-        }catch(err){
+        } catch (err) {
             console.log(err)
         }
-   }
+    }
 )

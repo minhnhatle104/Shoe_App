@@ -38,7 +38,8 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
         alignItems:"center",
-        justifyContent:"space-around"
+        justifyContent:"space-around",
+        backgroundColor:Colors.greenAlpha
     },
     container_input: {
         flexDirection:"row",
@@ -49,6 +50,7 @@ const styles = StyleSheet.create({
         margin: 12,
         borderRadius: 20,
         borderWidth: 1,
+        backgroundColor:Colors.white
     },
     input_field:{
         width:"70%",

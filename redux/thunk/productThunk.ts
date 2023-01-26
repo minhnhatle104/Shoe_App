@@ -13,3 +13,16 @@ export const getAllProductApi = createAsyncThunk(
         }
     }
 )
+
+
+export const getProductByCategoryIdApi = createAsyncThunk(
+    "shoe/productByCategoryId",
+    async (categoryId: string) => {
+        try {
+            const result = await axiosInstance.get(`Product/getProductByCategory?categoryId=${categoryId}`)
+            return result.data.content
+        } catch (err) {
+            console.log(err)
+        }
+    }
+)

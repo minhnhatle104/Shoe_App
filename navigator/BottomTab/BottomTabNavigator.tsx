@@ -12,6 +12,7 @@ import { RootStackParamList } from '../typeCheckNavigator';
 import { StyleSheet } from "react-native";
 import Colors from "../../common/Colors";
 import { CONSTANST } from "../../common/contanst";
+import HomeStack from "../Stack/HomeStack";
 
 
 type TabScreen = {
@@ -22,7 +23,7 @@ type TabScreen = {
 }
 
 const TabArr:TabScreen[] = [
-    { route: "Home", label: 'Home',  activeIcon: 'home', component: HomePage },
+    { route: "HomeStack", label: 'Home',  activeIcon: 'home', component: HomeStack },
     { route: "Favourite", label: 'Like',activeIcon: 'heart', component: ShoeFavourite },
     { route: 'Cart', label: 'Cart', activeIcon: 'cart', component: Cart },
     { route: 'Account', label: 'Account', activeIcon: 'account', component: Profile },
@@ -111,8 +112,7 @@ export default function AnimTab1() {
       screenOptions={{
         headerShown: false,
         tabBarStyle: styles.tabBar,
-      }}
-    >
+      }}>
       {TabArr.map((item, index) => {
         return (
           <BottomTabStack.Screen key={index} name={item.route} component={item.component}

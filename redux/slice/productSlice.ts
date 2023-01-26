@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getAllProductApi } from '../thunk/productThunk';
+import { getAllProductApi, getProductByCategoryIdApi } from '../thunk/productThunk';
 
 export interface Product {
     id: number;
@@ -33,6 +33,10 @@ const productSlice = createSlice({
         builder.addCase(getAllProductApi.pending, (state, action) => {
 
         }).addCase(getAllProductApi.fulfilled, (state, action) => {
+            state.shoeList = action.payload
+        }).addCase(getProductByCategoryIdApi.pending,(state,action)=>{
+
+        }).addCase(getProductByCategoryIdApi.fulfilled,(state,action)=>{
             state.shoeList = action.payload
         })
     },

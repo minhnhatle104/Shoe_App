@@ -7,6 +7,10 @@ import { useWindowDimensions } from 'react-native'
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 import { CONSTANST } from '../../../common/contanst'
 import Colors from '../../../common/Colors'
+import { useNavigation } from '@react-navigation/native'
+import SCREEENS from '../../../common/Screens'
+import { RootStackParamList } from '../../../navigator/typeCheckNavigator'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
 type Props = {
     shoeList: Product[] | null
@@ -17,10 +21,12 @@ const ListShoe = (props: Props) => {
 
     const { shoeList } = props
 
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
     const renderChildren = (item: Product) => {
         return (
             <TouchableOpacity onPress={() => {
-
+                navigation.navigate("Detail", { id: item.id})
             }} style={getChildrenStyle()} key={item.id}>
                 <View style={styles.container}>
                     <TouchableOpacity onPress={() => {
@@ -55,7 +61,7 @@ const ListShoe = (props: Props) => {
             margin: 4,
             borderRadius: 18,
             borderColor: "red",
-            borderWidth:1,
+            borderWidth: 1,
         };
     };
 
@@ -84,23 +90,23 @@ const styles = StyleSheet.create({
         top: 10,
     },
     container_image: {
-        height:"65%",
+        height: "65%",
     },
-    image:{
-        height:"100%"
+    image: {
+        height: "100%"
     },
-    container_text:{
-        height:"35%",
-        padding:10,
-        justifyContent:"center",
+    container_text: {
+        height: "35%",
+        padding: 10,
+        justifyContent: "center",
     },
-    text_name:{
-        color:Colors.black,
-        fontSize:CONSTANST.text24,
-        fontWeight:"bold"
+    text_name: {
+        color: Colors.black,
+        fontSize: CONSTANST.text24,
+        fontWeight: "bold"
     },
-    text_price:{
-        color:Colors.black,
-        fontSize:CONSTANST.text16,
+    text_price: {
+        color: Colors.black,
+        fontSize: CONSTANST.text16,
     }
 })

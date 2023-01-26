@@ -3,10 +3,14 @@ import categorySlice from "./slice/categorySlice";
 import productSlice from "./slice/productSlice";
 
 export const store = configureStore({
-    reducer:{
+    reducer: {
         categorySlice,
         productSlice,
     },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+        immutableCheck: false,
+        serializableCheck: false,
+    })
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

@@ -157,7 +157,7 @@ function CustomDrawerContent(props: any) {
 export const DrawerNavigator = () => {
     return (
         <DrawerStack.Navigator
-            initialRouteName='Home'
+            initialRouteName='HomeStack'
             screenOptions={({ route, navigation }) => ({
                 headerStyle: {
                     backgroundColor: Colors.red,
