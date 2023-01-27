@@ -61,7 +61,7 @@ const ListShoe = (props: Props) => {
             margin: 4,
             borderRadius: 18,
             borderColor: "red",
-            borderWidth: 1,
+            borderWidth: 4,
         };
     };
 

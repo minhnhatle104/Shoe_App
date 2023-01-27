@@ -45,6 +45,13 @@ const Detail = (props: Props) => {
                     }}>
                         <Ionicons name='arrow-back' color={Colors.black} size={CONSTANST.icon36} />
                     </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.button_like} onPress={()=>{
+
+                    }}>
+                        <Ionicons name='heart' color={Colors.black} size={CONSTANST.icon36} />
+                    </TouchableOpacity>
+
                 </View>
                 <ShoeInfo productDetail={productDetail} />
             </ScrollView>
@@ -66,5 +73,9 @@ const styles = StyleSheet.create({
     },
     button_back: {
         position: "absolute"
+    },
+    button_like: {
+        position: "absolute",
+        right:10,
     }
 })

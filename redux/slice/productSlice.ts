@@ -41,7 +41,7 @@ interface Category {
     category: string;
 }
 
-interface RelatedProduct {
+export interface RelatedProduct {
     id:               number;
     name:             string;
     alias:            string;

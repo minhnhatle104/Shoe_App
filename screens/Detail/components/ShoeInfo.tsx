@@ -6,6 +6,7 @@ import { Rating } from 'react-native-ratings'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Ionicons from "react-native-vector-icons/Ionicons"
 import ShoeSize from './ShoeSize'
+import RelationProduct from './RelationProduct'
 
 type Props = {
     productDetail: any
@@ -23,9 +24,6 @@ const ShoeInfo = (props: Props) => {
                     type='star'
                     ratingCount={5}
                     imageSize={CONSTANST.iconSize}
-                    ratingColor='#3498db'
-                    ratingBackgroundColor={Colors.gray}
-                    onFinishRating={() => { }}
                 />
             </View>
             <Text style={styles.text_price}>${productDetail?.price ? productDetail.price : ""}</Text>
@@ -45,6 +43,7 @@ const ShoeInfo = (props: Props) => {
                 <Ionicons name='cart' size={CONSTANST.iconSize} color={Colors.white} />
                 <Text style={styles.text_cart}>Add To Cart</Text>
             </TouchableOpacity>
+            <RelationProduct relatedProducts={productDetail?.relatedProducts ? productDetail.relatedProducts : []}/>
         </View>
     )
 }
@@ -54,7 +53,7 @@ export default ShoeInfo
 const styles = StyleSheet.create({
     container_detail: {
         flex: 1,
-        backgroundColor: Colors.gray,
+        backgroundColor: Colors.white,
         borderTopStartRadius: 20,
         borderTopEndRadius: 20,
         padding: 20,
@@ -111,6 +110,7 @@ const styles = StyleSheet.create({
         height: 50,
     },
     text_cart: {
-        color: Colors.white
+        color: Colors.white,
+        fontWeight:"bold",
     }
 })
