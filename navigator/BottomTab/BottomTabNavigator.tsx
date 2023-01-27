@@ -32,7 +32,7 @@ const TabArr:TabScreen[] = [
 
 const BottomTabStack = createBottomTabNavigator<RootStackParamList>();
 
-const animate1 = { 0: { scale: .5, translateY: 7 }, .92: { translateY: -34 }, 1: { scale: 1.2, translateY: -24 } }
+const animate1 = { 0: { scale: .5, translateY: 7 }, .92: { translateY: -34 }, 1: { scale: 1.2, translateY: -5 } }
 const animate2 = { 0: { scale: 1.2, translateY: -24 }, 1: { scale: 1, translateY: 7 } }
 
 const circle1 = { 0: { scale: 0 }, 0.3: { scale: .9 }, 0.5: { scale: .2 }, 0.8: { scale: .7 }, 1: { scale: 1 } }
@@ -87,11 +87,8 @@ export const BottomTabNavigator = () => {
         headerShown: false,
         tabBarStyle: {
           height: 60,
-          position: 'absolute',
-          bottom: 16,
-          right: 16,
-          left: 16,
-          borderRadius: 16
+          borderRadius: 16,
+          margin:5,
         }
       }}>
         {TabArr.map((item,index)=>{
