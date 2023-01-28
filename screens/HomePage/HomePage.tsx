@@ -12,6 +12,9 @@ import { getAllProductApi } from '../../redux/thunk/productThunk';
 import AppLoader from '../../common/components/AppLoader';
 import HomeHeader from './components/HomeHeader';
 import Colors from '../../common/Colors';
+import ShoeListHome from './components/ShoeListHome';
+import { ScrollView } from 'react-native-gesture-handler';
+import LatestShoeHome from './components/LatestShoeHome';
 
 type Props = {}
 
@@ -30,7 +33,7 @@ const HomePage = (props: Props) => {
 
     return (
         <>
-            <View style={{flex:1}}>
+            <ScrollView showsVerticalScrollIndicator={false} style={{flex:1}}>
                 <View style={{
                     height: 250, width: '100%',
                     backgroundColor: Colors.red, 
@@ -42,8 +45,10 @@ const HomePage = (props: Props) => {
                     <View>
                         <ListCategory categoryList={categoryList} />
                     </View>
+                    <ShoeListHome shoeList={shoeList} />
+                    <LatestShoeHome shoeList={shoeList}/>
                 </SafeAreaView>
-            </View>
+            </ScrollView>
             {isLoading ? <AppLoader /> : null}
         </>
     )

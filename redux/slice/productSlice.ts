@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getAllProductApi, getProductByCategoryIdApi, getProductByIdApi } from '../thunk/productThunk';
+import { getAllProductApi, getProductByCategoryIdApi, getProductByIdApi, } from '../thunk/productThunk';
 
 export interface ProductModel {
     id: number;
