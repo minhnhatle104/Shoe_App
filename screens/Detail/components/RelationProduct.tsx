@@ -1,6 +1,6 @@
 import { StyleSheet, FlatList, Text, View } from 'react-native'
 import React from 'react'
-import { RelatedProduct } from '../../../redux/slice/productSlice'
+import { RelatedProductModel } from '../../../redux/slice/productSlice'
 import { TouchableOpacity, Image } from 'react-native'
 import Colors from '../../../common/Colors'
 import { CONSTANST } from '../../../common/contanst'
@@ -9,7 +9,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../../../navigator/typeCheckNavigator'
 
 type Props = {
-    relatedProducts: RelatedProduct[] | null
+    relatedProducts: RelatedProductModel[] | null
 }
 
 const RelationProduct = (props: Props) => {

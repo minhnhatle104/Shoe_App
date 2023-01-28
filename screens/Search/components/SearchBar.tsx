@@ -12,7 +12,7 @@ import { getAllProductApi } from '../../../redux/thunk/productThunk'
 type Props = {}
 
 const SearchBar = (props: Props) => {
-    const [text, onChangeText] = React.useState('');
+    const [text, setChangeText] = React.useState('');
     const dispatch = useDispatch<AppDispatch>()
 
     const handleSearchSubmit = () => {
@@ -28,7 +28,10 @@ const SearchBar = (props: Props) => {
             <View style={styles.container_input}>
                 <TextInput
                     style={styles.input_field}
-                    onChangeText={onChangeText}
+                    onChangeText={(text)=>{
+                        setChangeText(text)
+                        dispatch(searchShoe(text))
+                    }}
                     placeholder="Enter product"
                 />
                 <TouchableOpacity onPress={handleSearchSubmit}>

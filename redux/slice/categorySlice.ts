@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { getAllCategoryApi } from '../thunk/categoryThunk';
 
-export interface Category {
+export interface CategoryModel {
   id: string;
   category: string;
   categoryParent: string;
@@ -12,7 +12,7 @@ export interface Category {
 }
 
 export type CategoryState = {
-  categoryList: Category[] | undefined | null
+  categoryList: CategoryModel[] | undefined | null
 }
 
 

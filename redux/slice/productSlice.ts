@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { getAllProductApi, getProductByCategoryIdApi, getProductByIdApi } from '../thunk/productThunk';
 
-export interface Product {
+export interface ProductModel {
     id: number;
     name: string;
     alias: string;
@@ -17,7 +17,7 @@ export interface Product {
     image: string;
 }
 
-export interface ShoeDetail {
+export interface ShoeDetailModel {
     id:               number;
     name:             string;
     alias:            string;
@@ -28,16 +28,16 @@ export interface ShoeDetail {
     shortDescription: string;
     quantity:         number;
     image:            string;
-    categories:       Category[];
-    relatedProducts:  RelatedProduct[];
+    categories:       CategoryModel[];
+    relatedProducts:  RelatedProductModel[];
 }
 
-interface Category {
+interface CategoryModel {
     id:       string;
     category: string;
 }
 
-export interface RelatedProduct {
+export interface RelatedProductModel {
     id:               number;
     name:             string;
     alias:            string;
@@ -49,11 +49,13 @@ export interface RelatedProduct {
 }
 
 export type ProductState = {
-    shoeList: Product[] | undefined | null
-    productDetail: ShoeDetail | undefined | null
+    defaultShoeList: ProductModel[] | undefined | null
+    shoeList: ProductModel[] | undefined | null
+    productDetail: ShoeDetailModel | undefined | null
 }
 
 const initialState:ProductState = {
+    defaultShoeList : null,
     shoeList: null,
     productDetail: null
 }
@@ -64,17 +66,25 @@ const productSlice = createSlice({
     reducers: {
         searchShoe:(state,action)=>{
             let textSearch:string = action.payload
-            state.shoeList = state.shoeList ? state.shoeList.filter(item => item.name.trim().toLowerCase().includes(textSearch.trim().toLowerCase())) : state.shoeList
+            if(textSearch === ""){
+                state.shoeList = state.defaultShoeList
+            }else{
+                state.shoeList = state.shoeList ? state.shoeList.filter(item => item.name.trim().toLowerCase()
+                .includes(textSearch.trim().toLowerCase())) 
+                : state.shoeList
+            }
         }
     },
     extraReducers: builder => {
         builder.addCase(getAllProductApi.pending, (state, action) => {
 
         }).addCase(getAllProductApi.fulfilled, (state, action) => {
+            state.defaultShoeList = action.payload
             state.shoeList = action.payload
         }).addCase(getProductByCategoryIdApi.pending,(state,action)=>{
 
         }).addCase(getProductByCategoryIdApi.fulfilled,(state,action)=>{
+            state.defaultShoeList = action.payload
             state.shoeList = action.payload
         }).addCase(getProductByIdApi.pending,(state,action)=>{
 

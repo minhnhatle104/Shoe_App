@@ -1,7 +1,7 @@
 import { FlatList, StyleSheet, Text } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { Category } from '../../../redux/slice/categorySlice'
+import { CategoryModel } from '../../../redux/slice/categorySlice'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Colors from '../../../common/Colors'
 import { useDispatch } from 'react-redux'
@@ -10,7 +10,7 @@ import { getAllProductApi, getProductByCategoryIdApi } from '../../../redux/thun
 import { CONSTANST } from '../../../common/contanst'
 
 type Props = {
-    categoryList: Category[] | undefined | null
+    categoryList: CategoryModel[] | undefined | null
 }
 
 const ListCategory = (props: Props) => {
@@ -19,7 +19,7 @@ const ListCategory = (props: Props) => {
 
     const dispatch = useDispatch<AppDispatch>();
 
-    const _renderItem = (item: Category) => {
+    const _renderItem = (item: CategoryModel) => {
         return <TouchableOpacity
             style={[styles.container_item, {
                 borderBottomWidth: 5,

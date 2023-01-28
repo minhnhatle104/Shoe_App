@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import { Product } from '../../../redux/slice/productSlice'
+import { ProductModel } from '../../../redux/slice/productSlice'
 import StaggeredList from '@mindinventory/react-native-stagger-view'
 import { Image } from 'react-native'
 import { useWindowDimensions } from 'react-native'
@@ -12,7 +12,7 @@ import { RootStackParamList } from '../../../navigator/typeCheckNavigator'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
 type Props = {
-    shoeList: Product[] | undefined | null
+    shoeList: ProductModel[] | undefined | null
 }
 
 const ListShoe = (props: Props) => {
@@ -22,7 +22,7 @@ const ListShoe = (props: Props) => {
 
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-    const renderChildren = (item: Product) => {
+    const renderChildren = (item: ProductModel) => {
         return (
             <TouchableOpacity onPress={() => {
                 navigation.navigate("Detail", { id: item.id})
