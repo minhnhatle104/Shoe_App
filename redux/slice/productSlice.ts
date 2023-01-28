@@ -66,6 +66,7 @@ const productSlice = createSlice({
     reducers: {
         searchShoe:(state,action)=>{
             let textSearch:string = action.payload
+            console.log(textSearch)
             if(textSearch === ""){
                 state.shoeList = state.defaultShoeList
             }else{
