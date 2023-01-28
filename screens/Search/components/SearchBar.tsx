@@ -4,12 +4,24 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 import { CONSTANST } from '../../../common/contanst'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Colors from '../../../common/Colors'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../../../redux/configStore'
+import { searchShoe } from '../../../redux/slice/productSlice'
+import { getAllProductApi } from '../../../redux/thunk/productThunk'
 
 type Props = {}
 
 const SearchBar = (props: Props) => {
     const [text, onChangeText] = React.useState('');
+    const dispatch = useDispatch<AppDispatch>()
 
+    const handleSearchSubmit = () => {
+        if(text === ""){
+            dispatch(getAllProductApi())
+        }else{
+            dispatch(searchShoe(text))
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -19,7 +31,7 @@ const SearchBar = (props: Props) => {
                     onChangeText={onChangeText}
                     placeholder="Enter product"
                 />
-                <TouchableOpacity>
+                <TouchableOpacity onPress={handleSearchSubmit}>
                     <FontAwesome5 name='search'  size={CONSTANST.iconSize} />
                 </TouchableOpacity>
             </View>

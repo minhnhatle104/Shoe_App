@@ -8,7 +8,6 @@ import ListCategory from './components/ListCategory';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/configStore';
 import { getAllCategoryApi } from '../../redux/thunk/categoryThunk';
-import ListShoe from './components/ListShoe';
 import { getAllProductApi } from '../../redux/thunk/productThunk';
 import AppLoader from '../../common/components/AppLoader';
 import HomeHeader from './components/HomeHeader';
@@ -34,15 +33,15 @@ const HomePage = (props: Props) => {
             <View style={{flex:1}}>
                 <View style={{
                     height: 250, width: '100%',
-                    backgroundColor: Colors.red, position: 'absolute',
-                    borderBottomLeftRadius: 100,
+                    backgroundColor: Colors.red, 
+                    position: 'absolute',
+                    borderBottomLeftRadius: 120,
                 }}></View>
                 <SafeAreaView style={{flex:1}}>
                     <HomeHeader />
                     <View>
                         <ListCategory categoryList={categoryList} />
                     </View>
-                    <ListShoe shoeList={shoeList} />
                 </SafeAreaView>
             </View>
             {isLoading ? <AppLoader /> : null}

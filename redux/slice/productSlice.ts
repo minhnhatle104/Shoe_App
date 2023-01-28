@@ -17,10 +17,6 @@ export interface Product {
     image: string;
 }
 
-export type ProductState = {
-    shoeList: Product[] | undefined| null
-}
-
 export interface ShoeDetail {
     id:               number;
     name:             string;
@@ -52,11 +48,12 @@ export interface RelatedProduct {
     image:            string;
 }
 
-export type ProductDetail = {
+export type ProductState = {
+    shoeList: Product[] | undefined | null
     productDetail: ShoeDetail | undefined | null
 }
 
-const initialState = {
+const initialState:ProductState = {
     shoeList: null,
     productDetail: null
 }
@@ -64,7 +61,12 @@ const initialState = {
 const productSlice = createSlice({
     name: "productSlice",
     initialState,
-    reducers: {},
+    reducers: {
+        searchShoe:(state,action)=>{
+            let textSearch:string = action.payload
+            state.shoeList = state.shoeList ? state.shoeList.filter(item => item.name.trim().toLowerCase().includes(textSearch.trim().toLowerCase())) : state.shoeList
+        }
+    },
     extraReducers: builder => {
         builder.addCase(getAllProductApi.pending, (state, action) => {
 
@@ -82,6 +84,6 @@ const productSlice = createSlice({
     },
 });
 
-export const { } = productSlice.actions
+export const {searchShoe, } = productSlice.actions
 
 export default productSlice.reducer

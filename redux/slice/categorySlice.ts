@@ -16,7 +16,7 @@ export type CategoryState = {
 }
 
 
-const initialState = {
+const initialState:CategoryState = {
   categoryList: null
 }
 

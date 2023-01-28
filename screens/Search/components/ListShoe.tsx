@@ -1,5 +1,5 @@
-import { StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React from 'react'
 import { Product } from '../../../redux/slice/productSlice'
 import StaggeredList from '@mindinventory/react-native-stagger-view'
 import { Image } from 'react-native'
@@ -8,7 +8,6 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 import { CONSTANST } from '../../../common/contanst'
 import Colors from '../../../common/Colors'
 import { useNavigation } from '@react-navigation/native'
-import SCREEENS from '../../../common/Screens'
 import { RootStackParamList } from '../../../navigator/typeCheckNavigator'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
@@ -28,7 +27,7 @@ const ListShoe = (props: Props) => {
             <TouchableOpacity onPress={() => {
                 navigation.navigate("Detail", { id: item.id})
             }} style={getChildrenStyle()} key={item.id}>
-                <View style={styles.container}>
+                <View>
                     <TouchableOpacity onPress={() => {
 
                     }} style={styles.container_like}>
@@ -56,7 +55,7 @@ const ListShoe = (props: Props) => {
     const getChildrenStyle = () => {
         return {
             width: (width - 18) / 2,
-            height: 300,
+            height:300,
             backgroundColor: Colors.white,
             margin: 4,
             borderRadius: 18,
@@ -78,9 +77,6 @@ const ListShoe = (props: Props) => {
 export default ListShoe
 
 const styles = StyleSheet.create({
-    container: {
-
-    },
     container_like: {
         width: CONSTANST.iconSize,
         height: CONSTANST.iconSize,

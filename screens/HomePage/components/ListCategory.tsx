@@ -7,6 +7,7 @@ import Colors from '../../../common/Colors'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../../redux/configStore'
 import { getAllProductApi, getProductByCategoryIdApi } from '../../../redux/thunk/productThunk'
+import { CONSTANST } from '../../../common/contanst'
 
 type Props = {
     categoryList: Category[] | undefined | null
@@ -34,7 +35,7 @@ const ListCategory = (props: Props) => {
             }}>
             <Text style={[styles.container_text,
             {
-                fontWeight: idActive === item.id ?  "bold" : "700",
+                fontWeight: idActive === item.id ?  "bold" : "300",
             }]}>
                 {item.category}
             </Text>
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
         marginLeft: 20,
     },
     container_text: {
-        fontSize: 16,
+        fontSize: CONSTANST.text24,
         color:Colors.white,
     }
 })
