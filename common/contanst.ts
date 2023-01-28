@@ -3,6 +3,7 @@ export const CONSTANST = {
     icon32:32,
     icon36:36,
     icon40:40,
+    icon150:150,
     text16:16,
     text20:20,
     text24:24,

@@ -4,6 +4,7 @@ export type RootStackParamList = {
     HomeStack:undefined;
     HomeScreen:undefined;
     Login:undefined;
+    Signup:undefined;
     Home: undefined;
     Search:undefined;
     Cart:undefined;
