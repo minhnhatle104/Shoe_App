@@ -34,13 +34,13 @@ export default ShoeSize
 
 const styles = StyleSheet.create({
     container_size: {
-        margin: 20,
+        margin:10,
         borderRadius: 30,
-        padding: 10,
+        padding: 5,
     },
     text_size: {
         color: Colors.white,
-        fontSize: CONSTANST.text24,
+        fontSize: CONSTANST.text16,
         fontWeight: "bold"
     }
 })

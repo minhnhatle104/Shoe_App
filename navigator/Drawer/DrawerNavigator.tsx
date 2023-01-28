@@ -35,6 +35,7 @@ function CustomDrawerContent(props: any) {
 
     const drawerArr:drawerItem[] = [
         { label: SCREENS.HOME, icon: ICONS.HOME },
+        { label: SCREENS.SEARCH, icon: ICONS.SEARCH },
         { label: SCREENS.FAVOURITE, icon: ICONS.FAVOURITE },
         { label: SCREENS.CART, icon: ICONS.CART },
         { label: SCREENS.ACCOUNT, icon: ICONS.ACCOUNT },
@@ -159,6 +160,7 @@ export const DrawerNavigator = () => {
         <DrawerStack.Navigator
             initialRouteName='HomeStack'
             screenOptions={({ route, navigation }) => ({
+                headerShown:false,
                 headerStyle: {
                     backgroundColor: Colors.red,
                 },

@@ -3,6 +3,7 @@ import { RouteProp } from "@react-navigation/native";
 export type RootStackParamList = {
     HomeStack:undefined;
     Home: undefined;
+    Search:undefined,
     Cart:undefined;
     Account:undefined;
     Favourite: undefined;

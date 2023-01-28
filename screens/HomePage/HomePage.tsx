@@ -8,10 +8,11 @@ import ListCategory from './components/ListCategory';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/configStore';
 import { getAllCategoryApi } from '../../redux/thunk/categoryThunk';
-import SearchBar from './components/SearchBar';
 import ListShoe from './components/ListShoe';
 import { getAllProductApi } from '../../redux/thunk/productThunk';
 import AppLoader from '../../common/components/AppLoader';
+import HomeHeader from './components/HomeHeader';
+import Colors from '../../common/Colors';
 
 type Props = {}
 
@@ -20,7 +21,7 @@ const HomePage = (props: Props) => {
 
     const categoryList = useSelector((state: RootState) => state.categorySlice.categoryList);
     const shoeList = useSelector((state: RootState) => state.productSlice.shoeList);
-    const isLoading = useSelector((state:RootState)=>state.loadingSlice.isLoading);
+    const isLoading = useSelector((state: RootState) => state.loadingSlice.isLoading);
     const dispatch = useDispatch<AppDispatch>()
 
     useEffect(() => {
@@ -30,11 +31,20 @@ const HomePage = (props: Props) => {
 
     return (
         <>
-            <SafeAreaView style={{ flex: 1 }}>
-                <SearchBar />
-                <ListCategory categoryList={categoryList} />
-                <ListShoe shoeList={shoeList} />
-            </SafeAreaView>
+            <View style={{flex:1}}>
+                <View style={{
+                    height: 250, width: '100%',
+                    backgroundColor: Colors.red, position: 'absolute',
+                    borderBottomLeftRadius: 100,
+                }}></View>
+                <SafeAreaView style={{flex:1}}>
+                    <HomeHeader />
+                    <View>
+                        <ListCategory categoryList={categoryList} />
+                    </View>
+                    <ListShoe shoeList={shoeList} />
+                </SafeAreaView>
+            </View>
             {isLoading ? <AppLoader /> : null}
         </>
     )

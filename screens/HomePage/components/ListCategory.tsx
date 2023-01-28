@@ -22,21 +22,20 @@ const ListCategory = (props: Props) => {
         return <TouchableOpacity
             style={[styles.container_item, {
                 borderBottomWidth: 5,
-                borderBottomColor: idActive === item.id ? Colors.red : Colors.black,
+                borderBottomColor: idActive === item.id ? Colors.white : Colors.red,
             }]}
             onPress={() => {
                 setIdActive(item.id)
-                if(item.id === "ALL"){
+                if (item.id === "ALL") {
                     dispatch(getAllProductApi())
-                }else{
+                } else {
                     dispatch(getProductByCategoryIdApi(item.id))
                 }
             }}>
-            <Text style={[styles.container_text, 
-                { 
-                    color: idActive === item.id ? Colors.red : Colors.white ,
-                    fontWeight:idActive === item.id ? "bold" : "400",
-                }]}>
+            <Text style={[styles.container_text,
+            {
+                fontWeight: idActive === item.id ?  "bold" : "700",
+            }]}>
                 {item.category}
             </Text>
         </TouchableOpacity >
@@ -44,15 +43,13 @@ const ListCategory = (props: Props) => {
 
 
     return (
-        <SafeAreaView style={{backgroundColor:Colors.black}}>
-            <FlatList
-                data={categoryList}
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-                renderItem={({ item }) => _renderItem(item)}
-                keyExtractor={item => item.id}
-            />
-        </SafeAreaView>
+        <FlatList
+            data={categoryList}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item }) => _renderItem(item)}
+            keyExtractor={item => item.id}
+        />
     )
 }
 
@@ -60,10 +57,10 @@ export default ListCategory
 
 const styles = StyleSheet.create({
     container_item: {
-        margin: 20,
+        marginLeft: 20,
     },
     container_text: {
         fontSize: 16,
-        fontWeight:"300"
+        color:Colors.white,
     }
 })

@@ -8,8 +8,7 @@ import Colors from '../../../common/Colors'
 type Props = {}
 
 const SearchBar = (props: Props) => {
-    const [text, onChangeText] = React.useState('Useless Text');
-    const [number, onChangeNumber] = React.useState('');
+    const [text, onChangeText] = React.useState('');
 
 
     return (
@@ -17,16 +16,15 @@ const SearchBar = (props: Props) => {
             <View style={styles.container_input}>
                 <TextInput
                     style={styles.input_field}
-                    onChangeText={onChangeNumber}
-                    value={number}
+                    onChangeText={onChangeText}
                     placeholder="Enter product"
                 />
                 <TouchableOpacity>
-                    <FontAwesome5 name='search' size={CONSTANST.iconSize} />
+                    <FontAwesome5 name='search'  size={CONSTANST.iconSize} />
                 </TouchableOpacity>
             </View>
             <TouchableOpacity>
-                    <FontAwesome5 name='filter' color={Colors.black} size={CONSTANST.iconSize} />
+                    <FontAwesome5 name='filter' color={Colors.white} size={CONSTANST.iconSize} />
             </TouchableOpacity>
         </View>
     )
@@ -39,7 +37,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems:"center",
         justifyContent:"space-around",
-        backgroundColor:Colors.greenAlpha
+        backgroundColor:Colors.red
     },
     container_input: {
         flexDirection:"row",
