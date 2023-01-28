@@ -4,6 +4,9 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 import { ProductModel } from '../../../redux/slice/productSlice'
 import Colors from '../../../common/Colors'
 import { CONSTANST } from '../../../common/contanst'
+import { useNavigation } from '@react-navigation/native'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { RootStackParamList } from '../../../navigator/typeCheckNavigator'
 
 type Props = {
     shoeList: ProductModel[] | undefined | null
@@ -12,15 +15,19 @@ type Props = {
 const ShoeListHome = (props: Props) => {
     const { shoeList } = props
 
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
     const _renderHorizontalItem = (item: ProductModel) => {
-        return <TouchableOpacity style={styles.container_card}>
+        return <TouchableOpacity onPress={() => {
+            navigation.navigate("Detail", { id: item.id })
+        }} style={styles.container_card}>
             <TouchableOpacity style={styles.btn_cardLike} onPress={() => {
 
             }}>
                 <FontAwesome5 name='heart' color={Colors.black} size={CONSTANST.iconSize} />
             </TouchableOpacity>
             <Image style={styles.image_card} source={{ uri: item.image }} resizeMode={"contain"} />
-            <View style={{paddingLeft:20}}>
+            <View style={{ paddingLeft: 20 }}>
                 <Text style={styles.text_cardName}>{item.name}</Text>
                 <Text style={styles.text_cardAlias}>{item.alias}</Text>
                 <Text style={styles.text_cardPrice}>${item.price}</Text>
@@ -48,7 +55,7 @@ const styles = StyleSheet.create({
         margin: 20,
         padding: 10,
         borderRadius: 20,
-        elevation:10,
+        elevation: 10,
     },
     btn_cardLike: {
         position: "absolute",
@@ -64,7 +71,7 @@ const styles = StyleSheet.create({
         color: Colors.black,
     },
     text_cardAlias: {
-        fontSize:CONSTANST.text20,
+        fontSize: CONSTANST.text20,
         fontWeight: "500",
         color: Colors.gray,
     },

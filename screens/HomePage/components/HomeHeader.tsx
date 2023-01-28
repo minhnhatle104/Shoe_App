@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image } from 'react-native'
-import React from 'react'
+import React,{memo} from 'react'
 import Colors from '../../../common/Colors'
 import { CONSTANST } from '../../../common/contanst'
 
@@ -21,7 +21,7 @@ const HomeHeader = (props: Props) => {
     )
 }
 
-export default HomeHeader
+export default memo(HomeHeader)
 
 const styles = StyleSheet.create({
     container_header: {

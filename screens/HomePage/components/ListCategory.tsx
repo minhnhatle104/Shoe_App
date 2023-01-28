@@ -1,8 +1,6 @@
-import { FlatList, StyleSheet, Text } from 'react-native'
-import React, { useState } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { FlatList, StyleSheet, Text,TouchableOpacity } from 'react-native'
+import React, { useState,memo } from 'react'
 import { CategoryModel } from '../../../redux/slice/categorySlice'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import Colors from '../../../common/Colors'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../../redux/configStore'
@@ -54,7 +52,7 @@ const ListCategory = (props: Props) => {
     )
 }
 
-export default ListCategory
+export default memo(ListCategory)
 
 const styles = StyleSheet.create({
     container_item: {

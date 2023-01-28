@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
-import { DrawerNavigator } from './Drawer/DrawerNavigator'
+import { StackNavigator } from './Stack/Navigator'
 
 type Props = {}
 
 const Routes = (props: Props) => {
   return (
     <NavigationContainer>
-        <DrawerNavigator/>
+        <StackNavigator/>
     </NavigationContainer>
   )
 }

@@ -23,7 +23,7 @@ type TabScreen = {
 }
 
 const TabArr: TabScreen[] = [
-  { route: "HomeStack", label: 'Home', activeIcon: 'home', component: HomeStack },
+  { route: "HomeScreen", label: 'Home', activeIcon: 'home', component: HomeStack },
   { route: "Search", label: "Search", activeIcon: "text-search", component: SearchShoe },
   { route: "Favourite", label: 'Like', activeIcon: 'heart', component: ShoeFavourite },
   { route: 'Cart', label: 'Cart', activeIcon: 'cart', component: Cart },
