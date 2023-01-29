@@ -11,6 +11,7 @@ import Colors from '../../common/Colors';
 import { CONSTANST } from '../../common/contanst';
 import ShoeInfo from './components/ShoeInfo';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import Swiper from 'react-native-swiper';
 
 type Props = {}
 
@@ -28,25 +29,34 @@ const Detail = (props: Props) => {
         dispatch(getProductByIdApi(id))
     }, [id])
 
+    const carousels = [];
 
+    for (let i = 0; i < 3; i++) {
+        carousels.push(
+            <Image
+                key={i}
+                source={{ uri: productDetail?.image ? productDetail.image : "https://picsum.photos.cc?u=1" }}
+                style={styles.image}
+                resizeMode={"contain"}
+            />
+        )
+    }
 
     return (
         <>
             <ScrollView showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ flexGrow: 1 }}>
                 <View style={styles.container_image}>
-                    <Image
-                        source={{ uri: productDetail?.image ? productDetail.image : "https://picsum.photos.cc?u=1" }}
-                        style={styles.image}
-                        resizeMode={"contain"}
-                    />
-                    <TouchableOpacity style={styles.button_back} onPress={()=>{
+                    <Swiper>
+                        {carousels}
+                    </Swiper>
+                    <TouchableOpacity style={styles.button_back} onPress={() => {
                         navigation.goBack()
                     }}>
                         <Ionicons name='arrow-back' color={Colors.black} size={CONSTANST.icon36} />
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.button_like} onPress={()=>{
+                    <TouchableOpacity style={styles.button_like} onPress={() => {
 
                     }}>
                         <Ionicons name='heart' color={Colors.black} size={CONSTANST.icon36} />
@@ -76,6 +86,6 @@ const styles = StyleSheet.create({
     },
     button_like: {
         position: "absolute",
-        right:10,
+        right: 10,
     }
 })
