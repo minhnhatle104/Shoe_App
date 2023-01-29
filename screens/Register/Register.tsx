@@ -1,5 +1,5 @@
-import { Image, Keyboard, KeyboardAvoidingView, Platform, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
-import React, { useState, useRef } from 'react'
+import { Alert, Image, Keyboard, KeyboardAvoidingView, Platform, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
+import React, { useState, useRef, useEffect } from 'react'
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 import { useNavigation } from '@react-navigation/native'
 import { useFormik } from "formik";
@@ -10,14 +10,23 @@ import { RootStackParamList } from '../../navigator/typeCheckNavigator'
 import Colors from '../../common/Colors'
 import { CONSTANST } from '../../common/contanst'
 import SelectDropdown from 'react-native-select-dropdown'
+import { AccountRegisterModel, closeNotificationRegister } from '../../redux/slice/accountSlice';
+import { AppDispatch, RootState } from '../../redux/configStore';
+import { useDispatch, useSelector } from 'react-redux';
+import { getRegisterApi } from '../../redux/thunk/accountThunk';
+import AppLoader from '../../common/components/AppLoader';
 
 type Props = {}
 
 const Register = (props: Props) => {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+    const dispatch:AppDispatch = useDispatch()
+    const {statusRegister,popUpNotification} = useSelector((state:RootState)=>state.accountSlice)
+    const {isLoading} = useSelector((state:RootState)=>state.loadingSlice)
 
     const genders = [
-        "Male", "Female"
+        {label:"Male",value:true}, 
+        {label:"Female",value:false},
     ]
 
     const [isSecuredPass, setIsSecuredPass] = useState(true)
@@ -30,7 +39,7 @@ const Register = (props: Props) => {
         password: string,
         confirm_password?: string,
         name: string,
-        gender: string,
+        gender: boolean,
         phone: string
     }
 
@@ -39,7 +48,7 @@ const Register = (props: Props) => {
         password: "",
         confirm_password: "",
         name: "",
-        gender: "Male",
+        gender: true,
         phone: "",
     }
 
@@ -63,10 +72,27 @@ const Register = (props: Props) => {
         }),
         onSubmit: (values) => {
             console.log(values)
+            delete values["confirm_password"]
+            const infoRegister:AccountRegisterModel = values
+            dispatch(getRegisterApi(infoRegister))
         }
     });
 
+    useEffect(()=>{
+        // Đăng ký thành công
+        if(statusRegister){
+            Alert.alert("SUCCESS","Register successfully")
+            navigation.navigate("Login")
+        }
+        // Đăng ký thất bại
+        if(statusRegister === false && popUpNotification === true){
+            Alert.alert("ERROR","Can't create new account")
+            dispatch(closeNotificationRegister())
+        }
+    },[statusRegister,popUpNotification])
+
     return (
+        <>
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container_register}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={{flex:1}}>
@@ -177,7 +203,7 @@ const Register = (props: Props) => {
                             data={genders}
                             onSelect={(selectedItem, index) => {
                                 console.log(selectedItem, index);
-                                formik.setFieldValue("gender", selectedItem)
+                                formik.setFieldValue("gender", selectedItem.value)
                             }}
                             buttonStyle={styles.container_textInput}
                             renderCustomizedButtonChild={(selectedItem, index) => {
@@ -185,12 +211,19 @@ const Register = (props: Props) => {
                                     <View style={styles.dropdown3BtnChildStyle}>
                                         <MaterialCommunityIcons name="gender-male-female"
                                             size={CONSTANST.iconSize} color={Colors.black} />
-                                        <Text style={styles.dropdown3BtnTxt}>{"Male"}</Text>
+                                        <Text style={styles.dropdown3BtnTxt}>{selectedItem ? selectedItem.label :"Male"}</Text>
                                         <MaterialCommunityIcons name="chevron-down"
                                             size={CONSTANST.iconSize} color={Colors.black} />
                                     </View>
                                 );
                             }}
+                            renderCustomizedRowChild={(item, index) => {
+                                return (
+                                  <View style={{justifyContent:"center",alignItems:"center"}}>
+                                    <Text>{item.label}</Text>
+                                  </View>
+                                );
+                              }}
                             onChangeSearchInputText={() => { }}
                         />
                     </View>
@@ -229,6 +262,8 @@ const Register = (props: Props) => {
                 </View>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
+        {isLoading ? <AppLoader/> : null}
+    </>
     )
 }
 

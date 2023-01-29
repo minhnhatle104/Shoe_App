@@ -1,11 +1,12 @@
 import axios from "axios"
-import LocalStorage from "./local_storage/localStorage"
+import localStorage from "./local_storage/localStorage"
 
+const accessToken = localStorage.getStorage("login-token")
 
 export const axiosInstance = axios.create({
     baseURL:"https://shop.cyberlearn.vn/api/",
     timeout: 1000,
     headers:{
-        "Authorization":"Bearer "+ LocalStorage.getStorage("login-token")
+        "Authorization":"Bearer "+ accessToken
     }
 })

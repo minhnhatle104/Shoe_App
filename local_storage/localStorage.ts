@@ -25,17 +25,19 @@ export default {
         });
     },
 
-    getStorage: (keyName: string) => {
-        storage.load({
+    getStorage: async (keyName: string) => {
+        const data = await storage.load({
             key: keyName,
             autoSync: true,
             syncInBackground: true
         }).then((data) => {
+            console.log("data: ",data)
             return data
         }).catch(error => {
             console.log(`Error is ${error}`)
             return ""
         })
+        return data
     },
 
     removeStorage: (keyName: string) => {

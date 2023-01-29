@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import accountSlice from "./slice/accountSlice";
 import categorySlice from "./slice/categorySlice";
 import loadingSlice from "./slice/loadingSlice";
 import productSlice from "./slice/productSlice";
@@ -7,7 +8,8 @@ export const store = configureStore({
     reducer: {
         categorySlice,
         productSlice,
-        loadingSlice
+        loadingSlice,
+        accountSlice,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         immutableCheck: false,
