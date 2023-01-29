@@ -1,18 +1,22 @@
 import { Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useState, useRef } from 'react'
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 import { useNavigation } from '@react-navigation/native'
-import RNPickerSelect from 'react-native-picker-select';
 
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../../navigator/typeCheckNavigator'
 import Colors from '../../common/Colors'
 import { CONSTANST } from '../../common/contanst'
+import SelectDropdown from 'react-native-select-dropdown'
 
 type Props = {}
 
 const Register = (props: Props) => {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+    const genders = [
+        "Male", "Female"
+    ]
 
     return (
         <SafeAreaView style={styles.container_register}>
@@ -36,15 +40,23 @@ const Register = (props: Props) => {
                 <MaterialCommunityIcons name='account-circle' size={CONSTANST.iconSize} color={Colors.black} />
                 <TextInput placeholder='Enter name' />
             </View>
-            <View style={styles.container_textInput}>
-                <RNPickerSelect
-                    onValueChange={(value) => console.log(value)}
-                    items={[
-                        { label: 'Male', value: 'male' },
-                        { label: 'Female', value: 'female' },
-                    ]}
-                    placeholder={{ label: "Select you favourite language", value: null }} />
-            </View>
+            <SelectDropdown
+                data={genders}
+                onSelect={(selectedItem, index) => {
+                    console.log(selectedItem, index);
+                }}
+                buttonStyle={styles.container_textInput}
+                renderCustomizedButtonChild={(selectedItem, index) => {
+                    return (
+                        <View style={styles.dropdown3BtnChildStyle}>
+                            <MaterialCommunityIcons name="gender-male-female" size={CONSTANST.iconSize} color={Colors.black} />
+                            <Text style={styles.dropdown3BtnTxt}>{selectedItem ? selectedItem : 'Select gender'}</Text>
+                            <MaterialCommunityIcons name="chevron-down" size={CONSTANST.iconSize} color={Colors.black} />
+                        </View>
+                    );
+                }}
+                onChangeSearchInputText={() => { }}
+            />
             <View style={styles.container_textInput}>
                 <MaterialCommunityIcons name='cellphone' size={CONSTANST.iconSize} color={Colors.black} />
                 <TextInput placeholder='Enter phone' keyboardType='numeric' />
@@ -89,6 +101,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         width: 300,
+        height: 40,
         justifyContent: "flex-start",
         marginBottom: 20,
         paddingLeft: 10,
@@ -119,5 +132,18 @@ const styles = StyleSheet.create({
     text_login: {
         color: Colors.primaryDark,
         fontSize: CONSTANST.text16,
-    }
+    },
+    dropdown3BtnChildStyle: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 18,
+    },
+    dropdown3BtnTxt: {
+        color: Colors.black,
+        textAlign: 'center',
+        fontSize: 16,
+        marginHorizontal: 12,
+    },
 })
