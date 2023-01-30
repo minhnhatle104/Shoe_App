@@ -8,7 +8,7 @@ import ListCategory from './components/ListCategory';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/configStore';
 import { getAllCategoryApi } from '../../redux/thunk/categoryThunk';
-import { getAllProductApi } from '../../redux/thunk/productThunk';
+import { getAllProductApi, getProductLikeApi } from '../../redux/thunk/productThunk';
 import AppLoader from '../../common/components/AppLoader';
 import HomeHeader from './components/HomeHeader';
 import Colors from '../../common/Colors';
@@ -24,11 +24,13 @@ const HomePage = (props: Props) => {
     const categoryList = useSelector((state: RootState) => state.categorySlice.categoryList);
     const shoeList = useSelector((state: RootState) => state.productSlice.shoeList);
     const isLoading = useSelector((state: RootState) => state.loadingSlice.isLoading);
+    const shoeFavourite = useSelector((state:RootState)=>state.productSlice.shoeFavourite);
     const dispatch = useDispatch<AppDispatch>()
 
     useEffect(() => {
         dispatch(getAllCategoryApi())
         dispatch(getAllProductApi())
+        dispatch(getProductLikeApi())
     }, [])
 
     return (
@@ -45,7 +47,7 @@ const HomePage = (props: Props) => {
                     <View>
                         <ListCategory categoryList={categoryList} />
                     </View>
-                    <ShoeListHome shoeList={shoeList} />
+                    <ShoeListHome shoeList={shoeList} shoeFavourite={shoeFavourite}/>
                     <LatestShoeHome shoeList={shoeList}/>
                 </SafeAreaView>
             </ScrollView>

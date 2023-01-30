@@ -14,7 +14,7 @@ export const getLoginApi = createAsyncThunk(
             localStorage.saveStorage("login-token",result.data.content.accessToken)
             return result.data.content.accessToken
         } catch (err) {
-            console.log(err)
+            console.log("ERROR in login is:",err)
             thunkAPI.dispatch(closeLoading())
             return ""
         }

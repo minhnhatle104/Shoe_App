@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getAllProductApi, getProductByCategoryIdApi, getProductByIdApi, } from '../thunk/productThunk';
+import { getAllProductApi, getProductByCategoryIdApi, getProductByIdApi, getProductLikeApi, } from '../thunk/productThunk';
 
 export interface ProductModel {
     id: number;
@@ -48,16 +48,24 @@ export interface RelatedProductModel {
     image:            string;
 }
 
+export interface ProductLikeModel {
+    id:    number;
+    name:  string;
+    image: string;
+}
+
 export type ProductState = {
     defaultShoeList: ProductModel[] | undefined | null
     shoeList: ProductModel[] | undefined | null
     productDetail: ShoeDetailModel | undefined | null
+    shoeFavourite:ProductLikeModel[] | undefined | null
 }
 
 const initialState:ProductState = {
     defaultShoeList : null,
     shoeList: null,
-    productDetail: null
+    productDetail: null,
+    shoeFavourite:null,
 }
 
 const productSlice = createSlice({
@@ -91,6 +99,10 @@ const productSlice = createSlice({
 
         }).addCase(getProductByIdApi.fulfilled,(state,action)=>{
             state.productDetail = action.payload
+        }).addCase(getProductLikeApi.pending,(state,action)=>{
+
+        }).addCase(getProductLikeApi.fulfilled,(state,action)=>{
+            state.shoeFavourite = action.payload
         })
     },
 });

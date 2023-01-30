@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, FlatList, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
-import { ProductModel } from '../../../redux/slice/productSlice'
+import Ionicons from "react-native-vector-icons/Ionicons"
+import { ProductLikeModel, ProductModel } from '../../../redux/slice/productSlice'
 import Colors from '../../../common/Colors'
 import { CONSTANST } from '../../../common/contanst'
 import { useNavigation } from '@react-navigation/native'
@@ -10,21 +10,23 @@ import { RootStackParamList } from '../../../navigator/typeCheckNavigator'
 
 type Props = {
     shoeList: ProductModel[] | undefined | null
+    shoeFavourite: ProductLikeModel[] | undefined | null
 }
 
 const ShoeListHome = (props: Props) => {
-    const { shoeList } = props
+    const { shoeList,shoeFavourite } = props
 
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
     const _renderHorizontalItem = (item: ProductModel) => {
+        const itemFavourite =shoeFavourite?.find(item2 => item2.id === item.id)
         return <TouchableOpacity onPress={() => {
             navigation.navigate("Detail", { id: item.id })
         }} style={styles.container_card}>
             <TouchableOpacity style={styles.btn_cardLike} onPress={() => {
 
             }}>
-                <FontAwesome5 name='heart' color={Colors.black} size={CONSTANST.iconSize} />
+                <Ionicons name='heart' color={itemFavourite ? Colors.red : Colors.black} size={CONSTANST.iconSize} />
             </TouchableOpacity>
             <Image style={styles.image_card} source={{ uri: item.image }} resizeMode={"contain"} />
             <View style={{ paddingLeft: 20 }}>

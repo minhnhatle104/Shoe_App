@@ -1,5 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 import { axiosInstance } from "../../axiosInstance";
+import localStorage from "../../local_storage/localStorage";
 import { closeLoading, openLoading } from "../slice/loadingSlice";
 
 export const getAllProductApi = createAsyncThunk(
@@ -45,6 +47,18 @@ export const getProductByIdApi = createAsyncThunk(
         } catch (err) {
             thunkAPI.dispatch(closeLoading())
             console.log(err)
+        }
+    }
+)
+
+export const getProductLikeApi = createAsyncThunk(
+    "shoe/productLike",
+    async () => {
+        try {
+            const result =await axiosInstance.get("Users/getproductfavorite")
+            return result.data.content.productsFavorite
+        } catch (err) {
+            console.log("ERROR in get like is: ",err)
         }
     }
 )
