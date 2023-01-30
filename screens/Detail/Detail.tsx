@@ -5,7 +5,7 @@ import { RootRouteProps, RootStackParamList } from '../../navigator/typeCheckNav
 import { useDispatch, useSelector } from 'react-redux';
 import Ionicons from "react-native-vector-icons/Ionicons"
 import { AppDispatch, RootState } from '../../redux/configStore';
-import { getProductByIdApi } from '../../redux/thunk/productThunk';
+import { getProductByIdApi, postProductLikeApi, postProductUnlikeApi } from '../../redux/thunk/productThunk';
 import AppLoader from '../../common/components/AppLoader';
 import Colors from '../../common/Colors';
 import { CONSTANST } from '../../common/contanst';
@@ -21,6 +21,7 @@ const Detail = (props: Props) => {
 
     const productDetail: any = useSelector((state: RootState) => state.productSlice.productDetail)
     const isLoading: boolean = useSelector((state: RootState) => state.loadingSlice.isLoading)
+    const shoeFavourite = useSelector((state: RootState) => state.productSlice.shoeFavourite)
     const dispatch: AppDispatch = useDispatch();
 
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -42,6 +43,8 @@ const Detail = (props: Props) => {
         )
     }
 
+    const itemFavourite = shoeFavourite?.find(item => item.id === id)
+
     return (
         <>
             <ScrollView showsVerticalScrollIndicator={false}
@@ -57,9 +60,16 @@ const Detail = (props: Props) => {
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.button_like} onPress={() => {
-
+                        if(itemFavourite){
+                            dispatch(postProductUnlikeApi(id))
+                        }else{
+                            dispatch(postProductLikeApi(id))
+                        }
                     }}>
-                        <Ionicons name='heart' color={Colors.black} size={CONSTANST.icon36} />
+                        {itemFavourite ? <Ionicons name='heart' color={Colors.red} size={CONSTANST.icon36} /> 
+                            :
+                            <Ionicons name='heart' color={Colors.black} size={CONSTANST.icon36} />
+                        }
                     </TouchableOpacity>
 
                 </View>

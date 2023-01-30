@@ -7,6 +7,9 @@ import { CONSTANST } from '../../../common/contanst'
 import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../../../navigator/typeCheckNavigator'
+import { AppDispatch } from '../../../redux/configStore'
+import { useDispatch } from 'react-redux'
+import { postProductLikeApi, postProductUnlikeApi } from '../../../redux/thunk/productThunk'
 
 type Props = {
     shoeList: ProductModel[] | undefined | null
@@ -15,6 +18,7 @@ type Props = {
 
 const ShoeListHome = (props: Props) => {
     const { shoeList,shoeFavourite } = props
+    const dispatch:AppDispatch = useDispatch()
 
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
@@ -24,7 +28,11 @@ const ShoeListHome = (props: Props) => {
             navigation.navigate("Detail", { id: item.id })
         }} style={styles.container_card}>
             <TouchableOpacity style={styles.btn_cardLike} onPress={() => {
-
+                if(itemFavourite){
+                    dispatch(postProductUnlikeApi(item.id))
+                }else{
+                    dispatch(postProductLikeApi(item.id))
+                }
             }}>
                 <Ionicons name='heart' color={itemFavourite ? Colors.red : Colors.black} size={CONSTANST.iconSize} />
             </TouchableOpacity>

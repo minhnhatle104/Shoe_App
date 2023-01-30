@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getAllProductApi, getProductByCategoryIdApi, getProductByIdApi, getProductLikeApi, } from '../thunk/productThunk';
+import { getAllProductApi, getProductByCategoryIdApi, getProductByIdApi, getProductLikeApi, postProductLikeApi, postProductUnlikeApi, } from '../thunk/productThunk';
 
 export interface ProductModel {
     id: number;
@@ -103,6 +103,14 @@ const productSlice = createSlice({
 
         }).addCase(getProductLikeApi.fulfilled,(state,action)=>{
             state.shoeFavourite = action.payload
+        }).addCase(postProductLikeApi.pending,(state,action)=>{
+
+        }).addCase(postProductLikeApi.fulfilled,(state,action)=>{
+            
+        }).addCase(postProductUnlikeApi.pending,(state,action)=>{
+            
+        }).addCase(postProductUnlikeApi.fulfilled,(state,action)=>{
+            
         })
     },
 });

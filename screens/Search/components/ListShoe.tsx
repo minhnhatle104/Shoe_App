@@ -4,12 +4,15 @@ import { ProductModel } from '../../../redux/slice/productSlice'
 import StaggeredList from '@mindinventory/react-native-stagger-view'
 import { Image } from 'react-native'
 import { useWindowDimensions } from 'react-native'
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
+import Ionicons from "react-native-vector-icons/Ionicons"
 import { CONSTANST } from '../../../common/contanst'
 import Colors from '../../../common/Colors'
 import { useNavigation } from '@react-navigation/native'
 import { RootStackParamList } from '../../../navigator/typeCheckNavigator'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '../../../redux/configStore'
+import { postProductLikeApi, postProductUnlikeApi } from '../../../redux/thunk/productThunk'
 
 type Props = {
     shoeList: ProductModel[] | undefined | null
@@ -20,18 +23,25 @@ const ListShoe = (props: Props) => {
 
     const { shoeList } = props
 
+    const shoeFavourite = useSelector((state:RootState)=>state.productSlice.shoeFavourite)
+    const dispatch:AppDispatch = useDispatch()
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
     const renderChildren = (item: ProductModel) => {
+        const itemFavourite = shoeFavourite?.find(itemShoe => itemShoe.id === item.id)
         return (
             <TouchableOpacity onPress={() => {
                 navigation.navigate("Detail", { id: item.id})
             }} style={getChildrenStyle()} key={item.id}>
                 <View>
                     <TouchableOpacity onPress={() => {
-
+                        if(itemFavourite){
+                            dispatch(postProductUnlikeApi(item.id))
+                        }else{
+                            dispatch(postProductLikeApi(item.id))
+                        }
                     }} style={styles.container_like}>
-                        <FontAwesome5 name='heart' size={CONSTANST.iconSize} />
+                    <Ionicons name='heart' color={itemFavourite ? Colors.red : Colors.black} size={CONSTANST.iconSize} />
                     </TouchableOpacity>
                     <View style={styles.container_image}>
                         <Image
@@ -47,7 +57,6 @@ const ListShoe = (props: Props) => {
                         <Text style={styles.text_price}>${item.price}</Text>
                     </View>
                 </View>
-
             </TouchableOpacity>
         );
     };

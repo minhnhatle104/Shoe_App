@@ -62,3 +62,27 @@ export const getProductLikeApi = createAsyncThunk(
         }
     }
 )
+
+export const postProductLikeApi = createAsyncThunk(
+    "shoe/postProductLike",
+    async (id:number,thunkAPI) => {
+        try {
+            const result =await axiosInstance.get(`Users/like?productId=${id}`)
+            thunkAPI.dispatch(getProductLikeApi())
+        } catch (err) {
+            console.log("ERROR in post like is: ",err)
+        }
+    }
+)
+
+export const postProductUnlikeApi = createAsyncThunk(
+    "shoe/postProductUnlike",
+    async (id:number,thunkAPI) => {
+        try {
+            const result =await axiosInstance.get(`Users/unlike?productId=${id}`)
+            thunkAPI.dispatch(getProductLikeApi())
+        } catch (err) {
+            console.log("ERROR in post unlike is: ",err)
+        }
+    }
+)
