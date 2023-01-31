@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import _ from 'lodash';
-import { getAllProductApi, getProductByCategoryIdApi, getProductByIdApi, getProductLikeApi, postProductLikeApi, postProductUnlikeApi, } from '../thunk/productThunk';
+import { getAllProductApi, getProductByCategoryIdApi, getProductByIdApi, getProductLikeApi, orderProductApi, postProductLikeApi, postProductUnlikeApi, } from '../thunk/productThunk';
 
 export interface ProductModel {
     id: number;
@@ -61,6 +61,8 @@ export type ProductState = {
     productDetail: ShoeDetailModel | undefined | null
     shoeFavourite:ProductLikeModel[] | undefined | null
     shoeCart:any[]
+    statusOrder:boolean
+    popUpNotificationOrder:boolean
 }
 
 const initialState:ProductState = {
@@ -69,6 +71,8 @@ const initialState:ProductState = {
     productDetail: null,
     shoeFavourite:null,
     shoeCart:[],
+    statusOrder:false,
+    popUpNotificationOrder:false,
 }
 
 const productSlice = createSlice({
@@ -122,6 +126,12 @@ const productSlice = createSlice({
         },
         deleteAllCart:(state)=>{
             state.shoeCart = []
+        },
+        closeNotificationOrder:(state)=>{
+            state.popUpNotificationOrder = false
+        },
+        closeStatusOrder:(state)=>{
+            state.statusOrder = false
         }
     },
     extraReducers: builder => {
@@ -151,10 +161,28 @@ const productSlice = createSlice({
             
         }).addCase(postProductUnlikeApi.fulfilled,(state,action)=>{
             
+        }).addCase(orderProductApi.pending,(state,action)=>{
+            
+        }).addCase(orderProductApi.fulfilled,(state,action)=>{
+            if(action.payload){
+                state.statusOrder = true
+                state.popUpNotificationOrder = true
+                state.shoeCart = []
+            }else{
+                state.statusOrder = false
+                state.popUpNotificationOrder = true
+            }
         })
     },
 });
 
-export const {searchShoe,addToCart,deleteFromCart,deleteAllCart } = productSlice.actions
+export const {
+    searchShoe,
+    addToCart,
+    deleteFromCart,
+    deleteAllCart,
+    closeNotificationOrder,
+    closeStatusOrder
+ } = productSlice.actions
 
 export default productSlice.reducer

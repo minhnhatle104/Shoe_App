@@ -9,10 +9,13 @@ import PriceTotalCart from './components/PriceTotalCart'
 import { CONSTANST } from '../../common/contanst'
 import Colors from '../../common/Colors'
 import { deleteAllCart } from '../../redux/slice/productSlice'
+import ButtonBuyShoe from './components/ButtonBuyShoe'
+import AppLoader from '../../common/components/AppLoader'
 
 type Props = {}
 
 const Cart = (props: Props) => {
+    const { isLoading } = useSelector((state: RootState) => state.loadingSlice)
     const dispatch:AppDispatch = useDispatch()
 
     return (
@@ -40,8 +43,10 @@ const Cart = (props: Props) => {
                     </View>
                     <ListShoeCart />
                     <PriceTotalCart />
+                    <ButtonBuyShoe/>
                 </SafeAreaView>
             </ScrollView>
+            {isLoading ? <AppLoader/> : null}
         </>
     )
 }

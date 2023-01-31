@@ -86,3 +86,19 @@ export const postProductUnlikeApi = createAsyncThunk(
         }
     }
 )
+
+export const orderProductApi = createAsyncThunk(
+    "shoe/orderProductApi",
+    async (valueBuy:any,thunkAPI) => {
+        try {
+            thunkAPI.dispatch(openLoading())
+            const result =await axiosInstance.post('Users/order',valueBuy)
+            thunkAPI.dispatch(closeLoading())
+            return true
+        } catch (err) {
+            console.log("ERROR in order product is: ",err)
+            thunkAPI.dispatch(closeLoading())
+            return false
+        }
+    }
+)

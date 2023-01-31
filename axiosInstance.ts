@@ -1,4 +1,4 @@
-import axios, { AxiosHeaders, RawAxiosRequestConfig } from "axios"
+import axios from "axios"
 import localStorage from "./local_storage/localStorage"
 
 export const axiosInstance = axios.create({
