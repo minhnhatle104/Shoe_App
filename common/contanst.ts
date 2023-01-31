@@ -1,5 +1,6 @@
 export const CONSTANST = {
     iconSize:24,
+    icon28:28,
     icon32:32,
     icon36:36,
     icon40:40,

@@ -13,6 +13,7 @@ import Colors from "../../common/Colors";
 import { CONSTANST } from "../../common/contanst";
 import HomeStack from "../Stack/HomeStack";
 import SearchShoe from "../../screens/Search/SearchShoe";
+import AccountStack from "../Stack/AccountStack";
 
 
 type TabScreen = {
@@ -27,7 +28,7 @@ const TabArr: TabScreen[] = [
   { route: "Search", label: "Search", activeIcon: "text-search", component: SearchShoe },
   { route: "Favourite", label: 'Like', activeIcon: 'heart', component: ShoeFavourite },
   { route: 'Cart', label: 'Cart', activeIcon: 'cart', component: Cart },
-  { route: 'Account', label: 'Account', activeIcon: 'account', component: Profile },
+  { route: 'Account', label: 'Account', activeIcon: 'account', component: AccountStack },
 ];
 
 

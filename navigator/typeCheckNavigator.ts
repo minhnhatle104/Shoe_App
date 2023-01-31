@@ -8,7 +8,9 @@ export type RootStackParamList = {
     Home: undefined;
     Search:undefined;
     Cart:undefined;
+    AccountStack:undefined;
     Account:undefined;
+    Profile:undefined;
     Favourite: undefined;
     Detail:{id:number};
     Overview:undefined;
