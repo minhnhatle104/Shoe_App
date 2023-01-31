@@ -11,6 +11,7 @@ import Colors from '../../common/Colors';
 import { CONSTANST } from '../../common/contanst';
 import { Touchable } from 'react-native';
 import { TouchableOpacity } from 'react-native';
+import localStorage from '../../local_storage/localStorage';
 
 type Props = {}
 
@@ -31,7 +32,10 @@ const AccountScreen = (props: Props) => {
                 </View>
             </View>
             <View style={{ flex: 1 }}>
-                <TouchableOpacity style={styles.container_cardSetting}>
+                <TouchableOpacity 
+                style={styles.container_cardSetting}
+                onPress={()=>navigation.navigate("Profile")}
+                >
                     <MaterialCommunityIcons name='account-circle-outline' color={Colors.black} size={CONSTANST.icon28} />
                     <View style={styles.container_inCardText}>
                         <Text style={styles.text_inCard}>My Profile</Text>
@@ -55,7 +59,13 @@ const AccountScreen = (props: Props) => {
                         <Text style={styles.text_inCard}>Settings</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.container_cardSetting}>
+                <TouchableOpacity 
+                style={styles.container_cardSetting}
+                onPress={()=>{
+                    localStorage.removeStorage("login-token")
+                    navigation.navigate("Login")
+                }}
+                >
                     <MaterialCommunityIcons name='logout' color={Colors.black} size={CONSTANST.icon28} />
                     <View style={styles.container_inCardText}>
                         <Text style={styles.text_inCard}>Log Out</Text>

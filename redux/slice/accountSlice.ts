@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getLoginApi, getRegisterApi } from '../thunk/accountThunk';
+import { getLoginApi, getProfileApi, getRegisterApi } from '../thunk/accountThunk';
 
 export interface AccountLoginModel {
     email: string;
@@ -14,11 +14,24 @@ export interface AccountRegisterModel {
     phone: string;
 }
 
+export interface GetProfileModel {
+    ordersHistory: any[];
+    email:         string;
+    name:          string;
+    password:      null;
+    gender:        boolean;
+    phone:         string;
+    facebookId:    string;
+    deleted:       boolean;
+    avatar:        string;
+}
+
 interface AccountModel {
     accessToken: string;
     isLogin: boolean;
     popUpNotification: boolean;
     statusRegister:boolean;
+    infoProfile: GetProfileModel | any
 }
 
 const initialState: AccountModel = {
@@ -26,6 +39,7 @@ const initialState: AccountModel = {
     isLogin: false,
     popUpNotification: false,
     statusRegister:false,
+    infoProfile:{},
 }
 
 const accountSlice = createSlice({
@@ -54,6 +68,10 @@ const accountSlice = createSlice({
         }).addCase(getRegisterApi.fulfilled,(state,action)=>{
             state.statusRegister = action.payload
             state.popUpNotification = true
+        }).addCase(getProfileApi.pending,(state,action)=>{
+            
+        }).addCase(getProfileApi.fulfilled,(state,action)=>{
+            state.infoProfile = action.payload
         })
     }
 });

@@ -36,3 +36,15 @@ export const getRegisterApi = createAsyncThunk(
         }
     }
 )
+
+export const getProfileApi = createAsyncThunk(
+    "shoe/getProfileApi",
+    async () => {
+        try {
+            const result = await axiosInstance.post("Users/getProfile")
+            return result.data.content
+        } catch (err) {
+            console.log(err)
+        }
+    }
+)
