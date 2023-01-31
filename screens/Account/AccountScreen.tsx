@@ -12,11 +12,15 @@ import { CONSTANST } from '../../common/contanst';
 import { Touchable } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import localStorage from '../../local_storage/localStorage';
+import { AppDispatch } from '../../redux/configStore';
+import { useDispatch } from 'react-redux';
+import { closeStatusLogin } from '../../redux/slice/accountSlice';
 
 type Props = {}
 
 const AccountScreen = (props: Props) => {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+    const dispatch:AppDispatch = useDispatch()
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -66,6 +70,7 @@ const AccountScreen = (props: Props) => {
                     style={styles.container_cardSetting}
                     onPress={() => {
                         localStorage.removeStorage("login-token")
+                        dispatch(closeStatusLogin())
                         navigation.navigate("Login")
                     }}
                 >

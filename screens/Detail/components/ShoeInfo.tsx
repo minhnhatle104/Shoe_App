@@ -1,12 +1,16 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React from 'react'
 import Colors from '../../../common/Colors'
 import { CONSTANST } from '../../../common/contanst'
 import { Rating } from 'react-native-ratings'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import Ionicons from "react-native-vector-icons/Ionicons"
+import Toast from 'react-native-toast-message';
+
 import ShoeSize from './ShoeSize'
 import RelationProduct from './RelationProduct'
+import { AppDispatch } from '../../../redux/configStore'
+import { useDispatch } from 'react-redux'
+import { addToCart } from '../../../redux/slice/productSlice'
 
 type Props = {
     productDetail: any
@@ -14,6 +18,8 @@ type Props = {
 
 const ShoeInfo = (props: Props) => {
     const { productDetail } = props
+
+    const dispatch: AppDispatch = useDispatch()
 
     return (
         <View style={styles.container_detail}>
@@ -28,7 +34,7 @@ const ShoeInfo = (props: Props) => {
             </View>
             <Text style={styles.text_price}>${productDetail?.price ? productDetail.price : ""}</Text>
             <Text style={styles.text_selectSize}>Select a size</Text>
-            <ShoeSize sizeList={productDetail?.size ? productDetail.size : []}/>
+            <ShoeSize sizeList={productDetail?.size ? productDetail.size : []} />
             <View style={styles.container_description}>
                 <Text style={styles.text_description}>
                     {productDetail?.description ? productDetail.description.replace(/\n|\r/g, "") : ""}
@@ -39,11 +45,21 @@ const ShoeInfo = (props: Props) => {
                     {productDetail?.shortDescription ? productDetail.shortDescription.replace(/\n|\r/g, "") : ""}
                 </Text>
             </View>
-            <TouchableOpacity style={styles.button_cart}>
+            <TouchableOpacity
+                style={styles.button_cart}
+                onPress={() => {
+                    Toast.show({
+                        type: 'success',
+                        text1: 'Cart',
+                        text2: 'This product is added to cart'
+                    });
+                    dispatch(addToCart(productDetail?.id))
+                }}
+            >
                 <Ionicons name='cart' size={CONSTANST.iconSize} color={Colors.white} />
                 <Text style={styles.text_cart}>Add To Cart</Text>
             </TouchableOpacity>
-            <RelationProduct relatedProducts={productDetail?.relatedProducts ? productDetail.relatedProducts : []}/>
+            <RelationProduct relatedProducts={productDetail?.relatedProducts ? productDetail.relatedProducts : []} />
         </View>
     )
 }
@@ -111,6 +127,6 @@ const styles = StyleSheet.create({
     },
     text_cart: {
         color: Colors.white,
-        fontWeight:"bold",
+        fontWeight: "bold",
     }
 })

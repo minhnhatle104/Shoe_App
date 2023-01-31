@@ -11,6 +11,7 @@ export const getLoginApi = createAsyncThunk(
             thunkAPI.dispatch(openLoading())
             const result = await axiosInstance.post("Users/signin",infoLogin)
             thunkAPI.dispatch(closeLoading())
+            console.log(result)
             localStorage.saveStorage("login-token",result.data.content.accessToken)
             return result.data.content.accessToken
         } catch (err) {

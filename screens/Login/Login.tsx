@@ -51,14 +51,12 @@ const Login = (props: Props) => {
         // Trường hợp đăng nhập sai và cần hiển thị thông báo
         if(isLogin === false && popUpNotification === true){
             dispatch(closeNotificationLogin())
-            dispatch(closeStatusLogin())
             Alert.alert("ERROR","Wrong Information Login");
         }
         // Trường hợp đăng nhập đúng
         if(isLogin){
-            dispatch(closeNotificationLogin())
-            dispatch(closeStatusLogin())
             navigation.navigate("HomeStack")
+            dispatch(closeNotificationLogin())
         }
     },[isLogin,popUpNotification])
 

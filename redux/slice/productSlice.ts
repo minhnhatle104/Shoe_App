@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import _ from 'lodash';
 import { getAllProductApi, getProductByCategoryIdApi, getProductByIdApi, getProductLikeApi, postProductLikeApi, postProductUnlikeApi, } from '../thunk/productThunk';
 
 export interface ProductModel {
@@ -59,6 +60,7 @@ export type ProductState = {
     shoeList: ProductModel[] | undefined | null
     productDetail: ShoeDetailModel | undefined | null
     shoeFavourite:ProductLikeModel[] | undefined | null
+    shoeCart:any[]
 }
 
 const initialState:ProductState = {
@@ -66,6 +68,7 @@ const initialState:ProductState = {
     shoeList: null,
     productDetail: null,
     shoeFavourite:null,
+    shoeCart:[],
 }
 
 const productSlice = createSlice({
@@ -82,6 +85,43 @@ const productSlice = createSlice({
                 .includes(textSearch.trim().toLowerCase())) 
                 : state.shoeList
             }
+        },
+        addToCart:(state,action)=>{
+            let shoeId = action.payload
+            // Kiểm tra shoeCart có phải là mảng rỗng
+            if(_.isEmpty(state.shoeCart)){
+                const newShoe = {
+                    productId: shoeId,
+                    quantity:1
+                }
+                state.shoeCart.push(newShoe)
+            }else{
+                const index = state.shoeCart.findIndex(item => item.productId === shoeId)
+                // Trường hợp shoe có trong cart rồi
+                if(index !== -1){
+                    state.shoeCart[index].quantity +=1
+                }else{
+                    const newShoe = {
+                        productId: shoeId,
+                        quantity:1
+                    }
+                    state.shoeCart.push(newShoe)
+                }
+            }
+        },
+        deleteFromCart:(state,action)=>{
+            let shoeId = action.payload
+            const index = state.shoeCart.findIndex(item => item.productId === shoeId)
+            if(index!==-1){
+                state.shoeCart[index].quantity -=1
+                // Trường hợp trừ số lượng xong = 0
+                if(state.shoeCart[index].quantity === 0){
+                    state.shoeCart.splice(index, 1)
+                }
+            }
+        },
+        deleteAllCart:(state)=>{
+            state.shoeCart = []
         }
     },
     extraReducers: builder => {
@@ -115,6 +155,6 @@ const productSlice = createSlice({
     },
 });
 
-export const {searchShoe, } = productSlice.actions
+export const {searchShoe,addToCart,deleteFromCart,deleteAllCart } = productSlice.actions
 
 export default productSlice.reducer
