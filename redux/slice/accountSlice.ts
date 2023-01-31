@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getLoginApi, getProfileApi, getRegisterApi } from '../thunk/accountThunk';
+import { getLoginApi, getProfileApi, getRegisterApi, updateProfileApi } from '../thunk/accountThunk';
 
 export interface AccountLoginModel {
     email: string;
@@ -13,6 +13,15 @@ export interface AccountRegisterModel {
     gender: boolean;
     phone: string;
 }
+
+export interface AccountUpdateModel {
+    email: string;
+    password: string;
+    name: string;
+    gender: boolean;
+    phone: string;
+}
+
 
 export interface GetProfileModel {
     ordersHistory: any[];
@@ -31,6 +40,7 @@ interface AccountModel {
     isLogin: boolean;
     popUpNotification: boolean;
     statusRegister:boolean;
+    statusUpdateProfile:boolean;
     infoProfile: GetProfileModel | any
 }
 
@@ -39,6 +49,7 @@ const initialState: AccountModel = {
     isLogin: false,
     popUpNotification: false,
     statusRegister:false,
+    statusUpdateProfile:false,
     infoProfile:{},
 }
 
@@ -51,7 +62,16 @@ const accountSlice = createSlice({
         },
         closeNotificationRegister:(state)=>{
             state.popUpNotification = false
-        }
+        },
+        closeStatusRegister:(state)=>{
+            state.statusRegister = false
+        },
+        closeNotificationUpdate:(state)=>{
+            state.popUpNotification = false
+        },
+        closeStatusUpdateProfile:(state)=>{
+            state.statusUpdateProfile = false
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(getLoginApi.pending, (state, action) => {
@@ -72,10 +92,21 @@ const accountSlice = createSlice({
             
         }).addCase(getProfileApi.fulfilled,(state,action)=>{
             state.infoProfile = action.payload
+        }).addCase(updateProfileApi.pending,(state,action)=>{
+
+        }).addCase(updateProfileApi.fulfilled,(state,action)=>{
+            state.statusUpdateProfile = action.payload
+            state.popUpNotification = true
         })
     }
 });
 
-export const { closeNotificationLogin,closeNotificationRegister, } = accountSlice.actions
+export const { 
+    closeNotificationLogin,
+    closeNotificationRegister,
+    closeNotificationUpdate,
+    closeStatusUpdateProfile,
+    closeStatusRegister,
+ } = accountSlice.actions
 
 export default accountSlice.reducer

@@ -10,7 +10,7 @@ import { RootStackParamList } from '../../navigator/typeCheckNavigator'
 import Colors from '../../common/Colors'
 import { CONSTANST } from '../../common/contanst'
 import SelectDropdown from 'react-native-select-dropdown'
-import { AccountRegisterModel, closeNotificationRegister } from '../../redux/slice/accountSlice';
+import { AccountRegisterModel, closeNotificationRegister, closeStatusRegister } from '../../redux/slice/accountSlice';
 import { AppDispatch, RootState } from '../../redux/configStore';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRegisterApi } from '../../redux/thunk/accountThunk';
@@ -82,6 +82,8 @@ const Register = (props: Props) => {
         // Đăng ký thành công
         if(statusRegister){
             Alert.alert("SUCCESS","Register successfully")
+            dispatch(closeNotificationRegister())
+            dispatch(closeStatusRegister())
             navigation.navigate("Login")
         }
         // Đăng ký thất bại

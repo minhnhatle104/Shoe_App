@@ -5,27 +5,23 @@ import {
 } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
-import { useNavigation } from '@react-navigation/native'
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { RootStackParamList } from '../../navigator/typeCheckNavigator'
 import Colors from '../../common/Colors'
 import { CONSTANST } from '../../common/contanst'
 import SelectDropdown from 'react-native-select-dropdown'
-import { AccountRegisterModel, closeNotificationRegister } from '../../redux/slice/accountSlice';
+import { AccountUpdateModel, closeNotificationUpdate, closeStatusUpdateProfile } from '../../redux/slice/accountSlice';
 import { AppDispatch, RootState } from '../../redux/configStore';
 import { useDispatch, useSelector } from 'react-redux';
 import AppLoader from '../../common/components/AppLoader';
-import { getProfileApi } from '../../redux/thunk/accountThunk';
+import { getProfileApi, updateProfileApi } from '../../redux/thunk/accountThunk';
 
 type Props = {}
 
 const Profile = (props: Props) => {
-    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
     const dispatch: AppDispatch = useDispatch()
-    const { infoProfile, statusRegister, popUpNotification } = useSelector((state: RootState) => state.accountSlice)
+    const { infoProfile, statusUpdateProfile, popUpNotification } = useSelector((state: RootState) => state.accountSlice)
     const { isLoading } = useSelector((state: RootState) => state.loadingSlice)
 
     useEffect(() => {
@@ -64,43 +60,44 @@ const Profile = (props: Props) => {
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: formValuesProfile,
-        // validationSchema: Yup.object({
-        //     email: Yup.string()
-        //         .email("Invalid email format")
-        //         .required("Required!"),
-        //     password: Yup.string()
-        //         .min(6, "Minimum 6 characters")
-        //         .required("Required!"),
-        //     confirm_password: Yup.string()
-        //         .oneOf([Yup.ref("password")], "Password's not match")
-        //         .required("Required!"),
-        //     name: Yup.string()
-        //         .min(2, "Mininum 2 characters")
-        //         .max(15, "Maximum 15 characters")
-        //         .required("Required!"),
-        //     phone: Yup.string().matches(phoneRegExp, 'Phone number is not valid'),
-        // }),
+        validationSchema: Yup.object({
+            email: Yup.string()
+                .email("Invalid email format")
+                .required("Required!"),
+            password: Yup.string()
+                .min(6, "Minimum 6 characters")
+                .required("Required!"),
+            confirm_password: Yup.string()
+                .oneOf([Yup.ref("password")], "Password's not match")
+                .required("Required!"),
+            name: Yup.string()
+                .min(2, "Mininum 2 characters")
+                .max(15, "Maximum 15 characters")
+                .required("Required!"),
+            phone: Yup.string().matches(phoneRegExp, 'Phone number is not valid'),
+        }),
         onSubmit: (values) => {
-            console.log(values)
             delete values["confirm_password"]
-            const infoRegister: AccountRegisterModel = values
-            console.log(infoRegister)
+            const infoUpdate: AccountUpdateModel = values
+            console.log(infoUpdate)
             setIsSaveProfile(false)
+            dispatch(updateProfileApi(values))
         }
     });
 
     useEffect(() => {
         // Đăng ký thành công
-        if (statusRegister) {
-            Alert.alert("SUCCESS", "Register successfully")
-            navigation.navigate("Login")
+        if (statusUpdateProfile) {
+            Alert.alert("SUCCESS", "Update profile successfully")
+            dispatch(closeStatusUpdateProfile())
+            dispatch(closeNotificationUpdate())
         }
         // Đăng ký thất bại
-        if (statusRegister === false && popUpNotification === true) {
-            Alert.alert("ERROR", "Can't create new account")
-            dispatch(closeNotificationRegister())
+        if (statusUpdateProfile === false && popUpNotification === true) {
+            Alert.alert("ERROR", "Can't update profile")
+            dispatch(closeNotificationUpdate())
         }
-    }, [statusRegister, popUpNotification])
+    }, [statusUpdateProfile, popUpNotification])
 
     return (
         <>
@@ -119,7 +116,7 @@ const Profile = (props: Props) => {
                             <View style={
                                 [
                                     styles.container_textInput,
-                                    { backgroundColor: isSaveProfile ? Colors.white : Colors.gray }
+                                    { backgroundColor: Colors.gray }
                                 ]
                             }>
                                 <MaterialCommunityIcons
@@ -128,7 +125,7 @@ const Profile = (props: Props) => {
                                     color={Colors.black}
                                 />
                                 <TextInput
-                                    editable={isSaveProfile}
+                                    editable={false}
                                     style={styles.container_inputField}
                                     onBlur={formik.handleBlur('email')}
                                     onChangeText={formik.handleChange("email")}

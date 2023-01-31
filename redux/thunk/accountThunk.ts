@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "../../axiosInstance";
-import { AccountLoginModel, AccountRegisterModel } from "../slice/accountSlice";
+import { AccountLoginModel, AccountRegisterModel, AccountUpdateModel } from "../slice/accountSlice";
 import { closeLoading, openLoading } from "../slice/loadingSlice";
 import localStorage from "../../local_storage/localStorage";
 
@@ -45,6 +45,23 @@ export const getProfileApi = createAsyncThunk(
             return result.data.content
         } catch (err) {
             console.log(err)
+        }
+    }
+)
+
+export const updateProfileApi = createAsyncThunk(
+    "shoe/updateProfileApi",
+    async (infoUpdate:AccountUpdateModel,thunkAPI) => {
+        try {
+            thunkAPI.dispatch(openLoading())
+            const result = await axiosInstance.post("Users/updateProfile",infoUpdate)
+            thunkAPI.dispatch(closeLoading())
+            thunkAPI.dispatch(getProfileApi())
+            return true
+        } catch (err) {
+            console.log("ERROR in update profile is: ",err)
+            thunkAPI.dispatch(closeLoading())
+            return false
         }
     }
 )

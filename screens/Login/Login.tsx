@@ -55,6 +55,7 @@ const Login = (props: Props) => {
         }
         // Trường hợp đăng nhập đúng
         if(isLogin){
+            dispatch(closeNotificationLogin())
             navigation.navigate("HomeStack")
         }
     },[isLogin,popUpNotification])
