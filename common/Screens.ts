@@ -11,5 +11,6 @@ export default {
     CART:"Cart" as keyof RootStackParamList,
     ACCOUNT:"Account" as keyof RootStackParamList,
     PROFILE:"Profile" as keyof RootStackParamList,
+    CHANGEPASS:"ChangePass" as keyof RootStackParamList,
     DETAIL:"Detail" as keyof RootStackParamList,
 }

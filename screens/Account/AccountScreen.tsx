@@ -32,16 +32,19 @@ const AccountScreen = (props: Props) => {
                 </View>
             </View>
             <View style={{ flex: 1 }}>
-                <TouchableOpacity 
-                style={styles.container_cardSetting}
-                onPress={()=>navigation.navigate("Profile")}
+                <TouchableOpacity
+                    style={styles.container_cardSetting}
+                    onPress={() => navigation.navigate("Profile")}
                 >
                     <MaterialCommunityIcons name='account-circle-outline' color={Colors.black} size={CONSTANST.icon28} />
                     <View style={styles.container_inCardText}>
                         <Text style={styles.text_inCard}>My Profile</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.container_cardSetting}>
+                <TouchableOpacity
+                    style={styles.container_cardSetting}
+                    onPress={() => navigation.navigate("ChangePass")}
+                >
                     <MaterialCommunityIcons name='onepassword' color={Colors.black} size={CONSTANST.icon28} />
                     <View style={styles.container_inCardText}>
                         <Text style={styles.text_inCard}>Change Password</Text>
@@ -59,12 +62,12 @@ const AccountScreen = (props: Props) => {
                         <Text style={styles.text_inCard}>Settings</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity 
-                style={styles.container_cardSetting}
-                onPress={()=>{
-                    localStorage.removeStorage("login-token")
-                    navigation.navigate("Login")
-                }}
+                <TouchableOpacity
+                    style={styles.container_cardSetting}
+                    onPress={() => {
+                        localStorage.removeStorage("login-token")
+                        navigation.navigate("Login")
+                    }}
                 >
                     <MaterialCommunityIcons name='logout' color={Colors.black} size={CONSTANST.icon28} />
                     <View style={styles.container_inCardText}>
@@ -114,13 +117,13 @@ const styles = StyleSheet.create({
         margin: 20,
         marginBottom: 10,
         elevation: 10,
-        paddingLeft:30,
+        paddingLeft: 30,
     },
-    container_inCardText:{
-        marginLeft:30,
+    container_inCardText: {
+        marginLeft: 30,
     },
-    text_inCard:{
-        fontSize:CONSTANST.text20,
-        fontWeight:"bold",
+    text_inCard: {
+        fontSize: CONSTANST.text20,
+        fontWeight: "bold",
     }
 })

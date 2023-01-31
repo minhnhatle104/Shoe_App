@@ -14,6 +14,7 @@ export type RootStackParamList = {
     Favourite: undefined;
     Detail:{id:number};
     Overview:undefined;
+    ChangePass:undefined;
 };
 
 export type RootRouteProps<RouteName extends keyof RootStackParamList> = RouteProp<
