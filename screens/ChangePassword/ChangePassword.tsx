@@ -14,8 +14,9 @@ import { useFormik } from 'formik';
 import * as Yup from "yup";
 import { AppDispatch, RootState } from '../../redux/configStore';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeNotificationLogin } from '../../redux/slice/accountSlice';
+import { closeNotificationChangePass, closeStatusChangePassword } from '../../redux/slice/accountSlice';
 import AppLoader from '../../common/components/AppLoader';
+import { changePasswordApi } from '../../redux/thunk/accountThunk';
 
 type Props = {}
 
@@ -23,7 +24,7 @@ const ChangePassword = (props: Props) => {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
     const dispatch: AppDispatch = useDispatch()
     const isLoading = useSelector((state: RootState) => state.loadingSlice.isLoading)
-    const { isLogin, popUpNotification } = useSelector((state: RootState) => state.accountSlice)
+    const { statusChangePassword, popUpNotification } = useSelector((state: RootState) => state.accountSlice)
 
     const [isSecuredPass, setIsSecuredPass] = useState(true)
     const [isSecuredConPass,setIsSecuredConPass] = useState(true)
@@ -49,24 +50,25 @@ const ChangePassword = (props: Props) => {
                 .required("Required!"),
         }),
         onSubmit: (values) => {
-            console.log(values)
             delete values["confirm_password"]
             console.log(values)
+            dispatch(changePasswordApi(values))
         }
     });
 
     useEffect(() => {
         // Trường hợp đăng nhập sai và cần hiển thị thông báo
-        // if (isLogin === false && popUpNotification === true) {
-        //     dispatch(closeNotificationLogin())
-        //     Alert.alert("ERROR", "Wrong Information Login");
-        // }
-        // // Trường hợp đăng nhập đúng
-        // if (isLogin) {
-        //     dispatch(closeNotificationLogin())
-        //     navigation.navigate("HomeStack")
-        // }
-    }, [isLogin, popUpNotification])
+        if (statusChangePassword === false && popUpNotification === true) {
+            dispatch(closeNotificationChangePass())
+            Alert.alert("ERROR", "Can't change password");
+        }
+        // Trường hợp đăng nhập đúng
+        if (statusChangePassword) {
+            Alert.alert("SUCCESS","Change password successfully!")
+            dispatch(closeNotificationChangePass())
+            dispatch(closeStatusChangePassword())
+        }
+    }, [statusChangePassword, popUpNotification])
 
     return (
         <>

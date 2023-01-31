@@ -65,3 +65,20 @@ export const updateProfileApi = createAsyncThunk(
         }
     }
 )
+
+export const changePasswordApi = createAsyncThunk(
+    "shoe/changePasswordApi",
+    async (infoNewPass:any,thunkAPI) => {
+        try {
+            thunkAPI.dispatch(openLoading())
+            const result = await axiosInstance.post("Users/changePassword",infoNewPass)
+            thunkAPI.dispatch(closeLoading())
+            thunkAPI.dispatch(getProfileApi())
+            return true
+        } catch (err) {
+            console.log("ERROR in update profile is: ",err)
+            thunkAPI.dispatch(closeLoading())
+            return false
+        }
+    }
+)

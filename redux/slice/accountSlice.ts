@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getLoginApi, getProfileApi, getRegisterApi, updateProfileApi } from '../thunk/accountThunk';
+import { changePasswordApi, getLoginApi, getProfileApi, getRegisterApi, updateProfileApi } from '../thunk/accountThunk';
 
 export interface AccountLoginModel {
     email: string;
@@ -41,6 +41,7 @@ interface AccountModel {
     popUpNotification: boolean;
     statusRegister:boolean;
     statusUpdateProfile:boolean;
+    statusChangePassword:boolean;
     infoProfile: GetProfileModel | any
 }
 
@@ -50,6 +51,7 @@ const initialState: AccountModel = {
     popUpNotification: false,
     statusRegister:false,
     statusUpdateProfile:false,
+    statusChangePassword:false,
     infoProfile:{},
 }
 
@@ -59,6 +61,9 @@ const accountSlice = createSlice({
     reducers: {
         closeNotificationLogin: (state) => {
             state.popUpNotification = false
+        },
+        closeStatusLogin:(state)=>{
+            state.isLogin = false
         },
         closeNotificationRegister:(state)=>{
             state.popUpNotification = false
@@ -71,6 +76,12 @@ const accountSlice = createSlice({
         },
         closeStatusUpdateProfile:(state)=>{
             state.statusUpdateProfile = false
+        },
+        closeStatusChangePassword:(state)=>{
+            state.statusChangePassword = false
+        }, 
+        closeNotificationChangePass:(state)=>{
+            state.popUpNotification = false
         },
     },
     extraReducers: (builder) => {
@@ -97,6 +108,10 @@ const accountSlice = createSlice({
         }).addCase(updateProfileApi.fulfilled,(state,action)=>{
             state.statusUpdateProfile = action.payload
             state.popUpNotification = true
+        }).addCase(changePasswordApi.pending,(state,action)=>{
+
+        }).addCase(changePasswordApi.fulfilled,(state,action)=>{
+            state.statusChangePassword = true
         })
     }
 });
@@ -107,6 +122,9 @@ export const {
     closeNotificationUpdate,
     closeStatusUpdateProfile,
     closeStatusRegister,
+    closeStatusChangePassword,
+    closeNotificationChangePass,
+    closeStatusLogin
  } = accountSlice.actions
 
 export default accountSlice.reducer

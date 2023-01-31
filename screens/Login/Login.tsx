@@ -13,7 +13,7 @@ import * as Yup from "yup";
 import { AppDispatch, RootState } from '../../redux/configStore';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLoginApi } from '../../redux/thunk/accountThunk';
-import { AccountLoginModel, closeNotificationLogin } from '../../redux/slice/accountSlice';
+import { AccountLoginModel, closeNotificationLogin, closeStatusLogin } from '../../redux/slice/accountSlice';
 import AppLoader from '../../common/components/AppLoader';
 
 type Props = {}
@@ -51,11 +51,13 @@ const Login = (props: Props) => {
         // Trường hợp đăng nhập sai và cần hiển thị thông báo
         if(isLogin === false && popUpNotification === true){
             dispatch(closeNotificationLogin())
+            dispatch(closeStatusLogin())
             Alert.alert("ERROR","Wrong Information Login");
         }
         // Trường hợp đăng nhập đúng
         if(isLogin){
             dispatch(closeNotificationLogin())
+            dispatch(closeStatusLogin())
             navigation.navigate("HomeStack")
         }
     },[isLogin,popUpNotification])
