@@ -10,7 +10,7 @@ import Colors from '../../../common/Colors';
 import { CONSTANST } from '../../../common/contanst';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../redux/configStore';
-import { addToCart, deleteFromCart } from '../../../redux/slice/productSlice';
+import { addToCart, deleteFromCart, deleteOneItemCart } from '../../../redux/slice/productSlice';
 import { SwipeListView } from 'react-native-swipe-list-view';
 
 type Props = {}
@@ -78,7 +78,7 @@ const ListShoeCart = (props: Props) => {
                         <TouchableOpacity
                             style={{ alignSelf: "flex-end" }}
                             onPress={() => {
-                                console.log(data.item.id)
+                                dispatch(deleteOneItemCart(data.item.id))
                             }}
                         >
                             <MaterialCommunityIcons name='delete' size={CONSTANST.icon40} color={Colors.red} />

@@ -126,7 +126,7 @@ const Login = (props: Props) => {
                         </View>
 
                         <TouchableOpacity style={styles.btn_Login} onPress={formik.handleSubmit}>
-                            <Text style={styles.text_Login}>Login</Text>
+                            <Text style={styles.text_Login}>LOGIN</Text>
                         </TouchableOpacity>
                         <View style={styles.container_suggest}>
                             <Text style={styles.text_suggest}>Don't have an account ? </Text>
@@ -189,7 +189,8 @@ const styles = StyleSheet.create({
     text_Login: {
         color: Colors.white,
         fontSize: CONSTANST.text24,
-        alignSelf: "center"
+        alignSelf: "center",
+        fontWeight:"bold",
     },
     container_suggest: {
         margin: 20,

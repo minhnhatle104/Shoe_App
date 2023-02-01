@@ -132,6 +132,14 @@ const productSlice = createSlice({
         },
         closeStatusOrder:(state)=>{
             state.statusOrder = false
+        },
+        deleteOneItemCart:(state,action)=>{
+            let shoeId = action.payload
+            const index = state.shoeCart.findIndex(item => item.productId === shoeId)
+            if(index!==-1){
+                // Tìm thấy sản phẩm trong giỏ hàng --> delete
+                state.shoeCart.splice(index,1)
+            }
         }
     },
     extraReducers: builder => {
@@ -182,7 +190,8 @@ export const {
     deleteFromCart,
     deleteAllCart,
     closeNotificationOrder,
-    closeStatusOrder
+    closeStatusOrder,
+    deleteOneItemCart
  } = productSlice.actions
 
 export default productSlice.reducer

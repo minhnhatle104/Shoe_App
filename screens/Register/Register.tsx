@@ -251,7 +251,7 @@ const Register = (props: Props) => {
                     </View>
 
                     <TouchableOpacity style={styles.btn_Signup} onPress={formik.handleSubmit}>
-                        <Text style={styles.text_Signup}>Register</Text>
+                        <Text style={styles.text_Signup}>REGISTER</Text>
                     </TouchableOpacity>
                     <View style={styles.container_suggest}>
                         <Text style={styles.text_suggest}>Already have an account ? </Text>
@@ -319,7 +319,8 @@ const styles = StyleSheet.create({
     text_Signup: {
         color: Colors.white,
         fontSize: CONSTANST.text24,
-        alignSelf: "center"
+        alignSelf: "center",
+        fontWeight:"bold",
     },
     container_suggest: {
         margin: 20,
