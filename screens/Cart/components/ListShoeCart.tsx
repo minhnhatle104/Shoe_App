@@ -1,8 +1,9 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-native'
-import React from 'react'
+import React, { ReactElement } from 'react'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { useNavigation } from '@react-navigation/native';
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 
 import { RootStackParamList } from '../../../navigator/typeCheckNavigator'
 import Colors from '../../../common/Colors';
@@ -10,6 +11,7 @@ import { CONSTANST } from '../../../common/contanst';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../redux/configStore';
 import { addToCart, deleteFromCart } from '../../../redux/slice/productSlice';
+import { SwipeListView } from 'react-native-swipe-list-view';
 
 type Props = {}
 
@@ -19,58 +21,73 @@ const ListShoeCart = (props: Props) => {
     const dispatch: AppDispatch = useDispatch()
 
     return (
-        <View>
-            {defaultShoeList?.map((item, index) => {
-                const itemCart = shoeCart?.find(shoeItem => shoeItem.productId === item.id)
-                if (itemCart) {
-                    return <TouchableOpacity
-                        key={index}
-                        style={styles.container_card}
-                        onPress={() => navigation.navigate("Detail", { id: item.id })}
-                    >
-                        <Image source={{ uri: item.image }} style={styles.image_card} />
-                        <View style={styles.container_text}>
-                            <Text style={styles.text_name}>{item.name}</Text>
-                            <Text style={styles.text_price}>${item.price}</Text>
-                        </View>
-                        <View style={styles.container_remainButton}>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    if (itemCart.quantity - 1 === 0) {
-                                        Alert.alert(
-                                            "Item will be zero",
-                                            "Do you want to delete this item from your cart",
-                                            [
-                                                {
-                                                    text: 'Cancel',
-                                                    onPress: () => console.log('Cancel Pressed'),
-                                                    style: 'cancel',
-                                                },
-                                                { text: 'OK', onPress: () => dispatch(deleteFromCart(item.id)) },
-                                            ]
-                                        )
-                                    }else{
-                                        dispatch(deleteFromCart(item.id))
-                                    }
-                                }}
-                            >
-                                <FontAwesome5 name='minus' color={Colors.black} size={CONSTANST.iconSize} />
-                            </TouchableOpacity>
-                            <Text style={styles.text_quantity}>{itemCart.quantity}</Text>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    dispatch(addToCart(item.id))
-                                }}
-                            >
-                                <FontAwesome5 name='plus' color={Colors.black} size={CONSTANST.iconSize} />
-                            </TouchableOpacity>
-                        </View>
-                    </TouchableOpacity>
-                } else {
-                    ""
-                }
-            })}
-        </View>
+        <>
+            <SwipeListView
+                data={defaultShoeList}
+                renderItem={(data, rowMap): ReactElement => {
+                    const itemCart = shoeCart?.find(shoeItem => shoeItem.productId === data.item.id)
+                    if (itemCart) {
+                        return <TouchableOpacity
+                            style={styles.container_card}
+                            onPress={() => navigation.navigate("Detail", { id: data.item.id })}
+                        >
+                            <Image source={{ uri: data.item.image }} style={styles.image_card} />
+                            <View style={styles.container_text}>
+                                <Text style={styles.text_name}>{data.item.name}</Text>
+                                <Text style={styles.text_price}>${data.item.price}</Text>
+                            </View>
+                            <View style={styles.container_remainButton}>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        if (itemCart.quantity - 1 === 0) {
+                                            Alert.alert(
+                                                "Item will be zero",
+                                                "Do you want to delete this item from your cart",
+                                                [
+                                                    {
+                                                        text: 'Cancel',
+                                                        onPress: () => console.log('Cancel Pressed'),
+                                                        style: 'cancel',
+                                                    },
+                                                    { text: 'OK', onPress: () => dispatch(deleteFromCart(data.item.id)) },
+                                                ]
+                                            )
+                                        } else {
+                                            dispatch(deleteFromCart(data.item.id))
+                                        }
+                                    }}
+                                >
+                                    <FontAwesome5 name='minus' color={Colors.black} size={CONSTANST.iconSize} />
+                                </TouchableOpacity>
+                                <Text style={styles.text_quantity}>{itemCart.quantity}</Text>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        dispatch(addToCart(data.item.id))
+                                    }}
+                                >
+                                    <FontAwesome5 name='plus' color={Colors.black} size={CONSTANST.iconSize} />
+                                </TouchableOpacity>
+                            </View>
+                        </TouchableOpacity>
+                    } else {
+                        return <></>
+                    }
+                }}
+                renderHiddenItem={(data, rowMap) => (
+                    <View style={styles.hiddenItem}>
+                        <TouchableOpacity
+                            style={{ alignSelf: "flex-end" }}
+                            onPress={() => {
+                                console.log(data.item.id)
+                            }}
+                        >
+                            <MaterialCommunityIcons name='delete' size={CONSTANST.icon40} color={Colors.red} />
+                        </TouchableOpacity>
+                    </View>
+                )}
+                rightOpenValue={-50}
+                disableRightSwipe />
+        </>
     )
 }
 
@@ -111,5 +128,13 @@ const styles = StyleSheet.create({
     },
     text_quantity: {
         fontSize: CONSTANST.text20
+    },
+    hiddenItem: {
+        backgroundColor: Colors.black,
+        borderRadius: 20,
+        height: 80,
+        margin: 10,
+        justifyContent: "center",
+        alignItems: "center"
     }
 })
