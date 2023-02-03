@@ -1,5 +1,5 @@
 import { Image, SafeAreaView, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
@@ -12,9 +12,10 @@ import { CONSTANST } from '../../common/contanst';
 import { Touchable } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import localStorage from '../../local_storage/localStorage';
-import { AppDispatch } from '../../redux/configStore';
-import { useDispatch } from 'react-redux';
+import { AppDispatch, RootState } from '../../redux/configStore';
+import { useDispatch, useSelector } from 'react-redux';
 import { closeStatusLogin } from '../../redux/slice/accountSlice';
+import { getProfileApi } from '../../redux/thunk/accountThunk';
 
 type Props = {}
 
@@ -22,17 +23,23 @@ const AccountScreen = (props: Props) => {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
     const dispatch:AppDispatch = useDispatch()
 
+    const { infoProfile } = useSelector((state: RootState) => state.accountSlice)
+
+    useEffect(()=>{
+        dispatch(getProfileApi())
+    },[])
+
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.container_image}>
                 <View style={{ position: "relative" }}>
-                    <Image style={styles.image_profile} source={require("../../assets/images/user-profile.jpg")} />
+                    <Image style={styles.image_profile} source={{uri:infoProfile?.avatar || "https://i.pravatar.cc?u=3"}} />
                     <TouchableOpacity style={styles.container_buttonPencil}>
                         <FontAwesome5 name='pencil-alt' color={Colors.black} size={CONSTANST.icon28} />
                     </TouchableOpacity>
                 </View>
                 <View style={styles.container_welcomeText}>
-                    <Text style={styles.text_welcome}>Welcome back, Minh</Text>
+                    <Text style={styles.text_welcome}>Welcome back, {infoProfile?.name || ""}</Text>
                 </View>
             </View>
             <View style={{ flex: 1 }}>

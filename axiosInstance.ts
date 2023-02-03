@@ -3,7 +3,6 @@ import localStorage from "./local_storage/localStorage"
 
 export const axiosInstance = axios.create({
     baseURL:"https://shop.cyberlearn.vn/api/",
-    timeout: 1000,
 })
 
 // Cấu hình cho tất cả request gửi đi
